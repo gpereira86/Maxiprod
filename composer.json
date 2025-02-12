@@ -1,0 +1,24 @@
+{
+    "name": "glauc/maxiprod",
+    "description": "Projeto Teste Tecnico para Estágio",
+    "autoload": {
+        "psr-4": {
+            "System\\": "system/"
+        },
+        "files":[
+            "system/config.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Glauco Pereira",
+            "email": "glaucoadm@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "nikic/fast-route": "^1.3",
+        "twig/twig": "^3.19",
+        "vlucas/phpdotenv": "^5.6"
+    }
+}

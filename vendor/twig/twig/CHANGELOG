@@ -1,10 +1,16 @@
-# 3.20.0 (2025-XX-XX)
+# 3.20.1 (2025-XX-XX)
+
+ * n/a
+
+# 3.20.0 (2025-02-13)
 
  * Fix support for ignoring syntax errors in an undefined handler in guard
  * Add configuration for Commonmark
  * Fix wrong array index
  * Bump minimum PHP version to 8.1
  * Add support for registering callbacks for undefined functions, filters or token parsers in the IntegrationTestCase
+ * Use correct line number for `ForElseNode`
+ * Fix timezone conversion on strings
 
 # 3.19.0 (2025-01-28)
 

@@ -1,13 +1,13 @@
-{% extends 'base.html'%}
+{% extends 'partials/base.html'%}
 
 {% block content %}
 
 <h1>Members</h1>
 {{ flash() }}
 <ul>
-    {% for people in peoples %}
-    <li>{{ people.name }}</li>
-    {% endfor %}
+
+    <li>{{ teste }}</li>
+
 </ul>
 
 {% endblock %}

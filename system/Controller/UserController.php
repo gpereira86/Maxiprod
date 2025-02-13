@@ -1,7 +1,7 @@
 <?php
 
 namespace System\Controller;
-use http\Env\Url;
+
 use System\Core\Controller;
 use System\Core\Helpers;
 use System\Model\PeopleModel;
@@ -14,16 +14,6 @@ class UserController extends Controller
     {
         parent::__construct('templates/View');
         $this->personInstance = new PeopleModel();
-    }
-
-    public function index(): void
-    {
-        $peoples = $this->personInstance->search();
-
-        echo $this->template->toRender('index.html', [
-            'peoples' => $peoples->result(true),
-            'form_data' => $_POST,
-        ]);
     }
 
     public function personRecord(): void

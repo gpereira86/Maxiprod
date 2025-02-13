@@ -1,6 +1,8 @@
 <?php
 
 use System\Controller\UserController;
+use System\Controller\MainControllerl;
+use System\Controller\TransactionsController;
 use System\Core\Helpers;
 use FastRoute\RouteCollector;
 use function FastRoute\simpleDispatcher;
@@ -8,15 +10,19 @@ use function FastRoute\simpleDispatcher;
 $dispatcher = simpleDispatcher(function (RouteCollector $r) {
     $url = SITE_URL;
 
-    $r->addRoute('GET', $url, 'system\Controller\SiteController@index');
-    $r->addRoute(['GET', 'POST'], "{$url}cadastrar-pessoa", 'system\Controller\SiteController@personRecord');
-    $r->addRoute('GET', "{$url}deletar-pessoa/{id:\d+}", 'system\Controller\SiteController@deletePerson');
-    $r->addRoute(['GET', 'POST'], "{$url}editar-pessoa/{id:\d+}", 'system\Controller\SiteController@editPerson');
+    $r->addRoute('GET', $url, 'System\Controller\MainController@index');
+    $r->addRoute(['GET', 'POST'], "{$url}cadastrar-pessoa", 'System\Controller\UserController@personRecord');
+    $r->addRoute('GET', "{$url}deletar-pessoa/{id:\d+}", 'System\Controller\UserController@deletePerson');
+    $r->addRoute(['GET', 'POST'], "{$url}editar-pessoa/{id:\d+}", 'System\Controller\UserController@editPerson');
 
 
-//    $r->addRoute('POST', "{$url}cadastrar", 'system\Controller\UserController@saveRegister');
-    $r->addRoute(['GET', 'POST'], "{$url}salvar-edicao/{id:\d+}", 'system\Controller\SiteController@updateRegister');
-    $r->addRoute('GET', "{$url}404", 'system\Controller\SiteControlador@error404');
+    $r->addRoute(['GET', 'POST'], "{$url}cadastrar-transacao", 'System\Controller\TransactionsController@transactionRecord');
+    $r->addRoute('GET', "{$url}deletar-transacao/{id:\d+}", 'System\Controller\TransactionsController@deleteTransaction');
+    $r->addRoute(['GET', 'POST'], "{$url}editar-transacao/{id:\d+}", 'System\Controller\TransactionsController@editTransaction');
+
+
+
+    $r->addRoute('GET', "{$url}404", 'System\Controller\MainController@error404');
 });
 
 
@@ -57,7 +63,8 @@ switch ($routeInfo[0]) {
         $controllerMethod = $handlerParts[1];
 
         // Instantiate the controller and call the appropriate method.
-        $siteController = new UserController();
+
+        $siteController = new $controllerClass;
         $siteController->$controllerMethod($variavel, $vars['pagina'] ?? null);
 
         break;

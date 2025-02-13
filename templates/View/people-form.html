@@ -1,4 +1,4 @@
-{% extends 'base.html'%}
+{% extends 'partials/base.html'%}
 
 {% block content %}
 
@@ -46,43 +46,45 @@
 
 </div>
 
-<div class="container mt-5">
+<div class="container my-5 ">
     <hr class="custom-gray-line">
     <h4 class="text-center mt-2 fw-bolder">Usuários Cadastrados</h4>
 
-    <div class="table-responsive overflow-auto">
-        <table class="table align-middle mt-4 custom-table-header">
-            <thead class="table-light text-center">
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Idade</th>
-                    <th scope="col">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for person in persons %}
+    <div class="">
+        <div class="table-responsive overflow-auto">
+            <table class="table align-middle mt-4 custom-table-header">
+                <thead class="table-light text-center">
                     <tr>
-
-                        <td class="col-sm-1 text-center">{{person.id}}</td>
-                        <td class="col-sm-7 ps-5">{{person.name}}</td>
-                        <td class="col-sm-2 text-center">{{person.age}}</td>
-
-                        <td class="col-sm-2 text-center">
-                            <a href="{{ url('editar-pessoa/' ~ person.id) }}" class="d-inline-block text-decoration-none custom-primary-button warning">
-                                <i class="fa-regular fa-pen-to-square"></i>
-                                <span class="d-none d-sm-inline">Editar</span>
-                            </a>
-                            &nbsp;
-                            <a href="{{ url('deletar-pessoa/' ~ person.id) }}" class="d-inline-block text-decoration-none custom-primary-button danger">
-                                <i class="fa-regular fa-trash-can"></i>
-                                <span class="d-none d-sm-inline">Excluir</span>
-                            </a>
-                        </td>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Idade</th>
+                        <th scope="col">Ações</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for person in persons %}
+                        <tr>
+
+                            <td class="col-sm-1 text-center">{{person.id}}</td>
+                            <td class="col-sm-7 ps-5">{{person.name}}</td>
+                            <td class="col-sm-2 text-center">{{person.age}}</td>
+
+                            <td class="col-sm-2 text-center">
+                                <a href="{{ url('editar-pessoa/' ~ person.id) }}" class="d-inline-block text-decoration-none custom-primary-button warning">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                    <span class="d-none d-sm-inline">Editar</span>
+                                </a>
+                                &nbsp;
+                                <a href="{{ url('deletar-pessoa/' ~ person.id) }}" class="d-inline-block text-decoration-none custom-primary-button danger">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                    <span class="d-none d-sm-inline">Excluir</span>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 
 

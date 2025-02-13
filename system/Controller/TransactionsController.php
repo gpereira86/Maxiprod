@@ -1,39 +1,33 @@
 <?php
 
 namespace System\Controller;
-use http\Env\Url;
+
 use System\Core\Controller;
 use System\Core\Helpers;
 use System\Model\PeopleModel;
+use System\Model\TransactionModel;
 
 class TransactionsController extends Controller
 {
     protected $personInstance;
+    protected $transactionInstance;
 
     public function __construct()
     {
         parent::__construct('templates/View');
         $this->personInstance = new PeopleModel();
+        $this->transactionInstance = new TransactionModel();
     }
 
-    public function index(): void
-    {
-        $peoples = $this->personInstance->search();
-
-        echo $this->template->toRender('index.html', [
-            'peoples' => $peoples->result(true),
-            'form_data' => $_POST,
-        ]);
-    }
-
-    public function personRecord(): void
+    public function transactionRecord(): void
     {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-            $persons = $this->personInstance->search();
 
-            echo $this->template->toRender('people-form.html', [
-                'persons' => $persons->result(true),
+            echo $this->template->toRender('transaction-form.html', [
+                'persons' => $this->personInstance->search()->result(true),
+                'transactions' => $this->transactionInstance->search()->limit(10)->order('id DESC')->result(true),
             ]);
+
         } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $dataSet = filter_input_array(INPUT_POST, FILTER_DEFAULT);
@@ -41,26 +35,29 @@ class TransactionsController extends Controller
                 try {
                     if ($this->validateRecordData($dataSet)) {
 
-                        $this->personInstance->name = $dataSet['nome'];
-                        $this->personInstance->age = $dataSet['idade'];
+                        $this->transactionInstance->expense_name = $dataSet['nomeDespesa'];
+                        $this->transactionInstance->cost = $dataSet['valor'];
+                        $this->transactionInstance->cost_type = $dataSet['typeOption'];
+                        $this->transactionInstance->notes = $dataSet['observacao'];
+                        $this->transactionInstance->people_id = $dataSet['usuario'];
 
-                        $this->personInstance->save();
+                        $this->transactionInstance->save();
 
-                        $this->mensagem->success("O usuário '{$_POST['nome']}' foi cadastrado com sucesso.")->flash();
+                        $this->mensagem->success("A transação '{$_POST['nomeDespesa']}' foi cadastrada com sucesso.")->flash();
 
-                        Helpers::redirect("cadastrar-pessoa");
+                        Helpers::redirect();
 
                     } else {
-                        $this->mensagem->messageError("Erro ao salvar dados no Banco de Dados, verifique os dados.")->flash();
-                        echo $this->template->toRender('people-form.html', [
+                        echo $this->template->toRender('transaction-form.html', [
+                            'transactions' => $this->transactionInstance->search()->limit(10)->order('id DESC')->result(true),
                             'persons' => $this->personInstance->search()->result(true),
                             'formData' => $_POST,
                         ]);
                     }
 
                 } catch (\Exception $e) {
-                    $this->mensagem->messageError($e->getMessage())->flash();
-                    Helpers::redirect("cadastrar-pessoa");
+                    $this->mensagem->messageError("Algo deu errado! | Erro: ".$e->getMessage())->flash();
+                    Helpers::redirect();
                 }
 
         } else {
@@ -70,56 +67,64 @@ class TransactionsController extends Controller
     }
 
 
-    public function deletePerson(int $id): void
+    public function deleteTransaction(int $id): void
     {
         try {
-            $person = $this->personInstance->searchById($id);
+            $transaction = $this->transactionInstance->searchById($id);
 
-            if($person) {
-                $this->personInstance->delete("id = {$id}");
-                $this->mensagem->success("O usuário '{$person->data()->name}' foi excluído com sucesso.")->flash();
+            if($transaction) {
+                $this->transactionInstance->delete("id = {$id}");
+                $this->mensagem->success("A transação de '{$transaction->data()->cost_type}': '{$transaction->data()->expense_name}' foi excluída com sucesso.")->flash();
             }
 
         } catch (\Exception $e) {
             $this->mensagem->messageError("Algo deu errado! | Erro: ". $e->getMessage())->flash();
         } finally {
-            Helpers::redirect("cadastrar-pessoa");
+            Helpers::redirect("cadastrar-transacao");
         }
     }
 
 
-    public function editPerson(int $id): void
+    public function editTransaction(int $id): void
     {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-            $person = $this->personInstance->searchById($id);
+            $transaction = $this->transactionInstance->searchById($id);
             $formDataSet = [
-                'id' => $person->data()->id,
-                'nome' => $person->data()->name,
-                'idade' => $person->data()->age,
+                'id' => $transaction->data()->id,
+                'nomeDespesa' => $transaction->data()->expense_name,
+                'valor' => $transaction->data()->cost,
+                'typeOption' => $transaction->data()->cost_type,
+                'observacao' => $transaction->data()->notes,
+                'usuario' => $transaction->data()->people_id,
             ];
 
-            echo $this->template->toRender('people-form.html', [
-                'persons' => $person->search()->result(true),
+            echo $this->template->toRender('transaction-form.html', [
+                'transactions' => $this->transactionInstance->search()->limit(10)->order('id DESC')->result(true),
+                'persons' => $this->personInstance->search()->result(true),
                 'formData' => $formDataSet,
             ]);
         } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
             $dataSet = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
             if ($this->validateRecordData($dataSet)) {
 
-                $this->personInstance->id = $dataSet['id'];
-                $this->personInstance->name = $dataSet['nome'];
-                $this->personInstance->age = $dataSet['idade'];
+                $this->transactionInstance->id = $dataSet['id'];
+                $this->transactionInstance->expense_name = $dataSet['nomeDespesa'];
+                $this->transactionInstance->cost = $dataSet['valor'];
+                $this->transactionInstance->cost_type = $dataSet['typeOption'];
+                $this->transactionInstance->notes = $dataSet['observacao'];
+                $this->transactionInstance->people_id = $dataSet['usuario'];
 
-                $this->personInstance->save();
+                $this->transactionInstance->save();
 
-                $this->mensagem->success("O cadastro do usuário '{$_POST['nome']}' foi atualizado com sucesso.")->flash();
+                $this->mensagem->success("O cadastro da transação de '{$_POST['typeOption']}': '{$_POST['nomeDespesa']}' foi atualizada com sucesso.")->flash();
 
-                Helpers::redirect("cadastrar-pessoa");
+                Helpers::redirect();
 
             } else {
-                $this->mensagem->messageError("Erro ao tentar alterar dados do usuário '{$_POST['nome']}' no Banco de Dados, verifique os dados.")->flash();
-                echo $this->template->toRender('people-form.html', [
+                echo $this->template->toRender('transaction-form.html', [
+                    'transactions' => $this->transactionInstance->search()->limit(10)->order('id DESC')->result(true),
                     'persons' => $this->personInstance->search()->result(true),
                     'formData' => $_POST,
                 ]);
@@ -131,7 +136,44 @@ class TransactionsController extends Controller
 
     public function validateRecordData(array $data):bool
     {
-        if (!isset($data['nome']) || empty($data['nome']) || !isset($data['idade']) || empty($data['idade'])) {
+        $part2Mensagem = "precisa ser preenchido(a) de acordo com padrão solicitado no campo.";
+
+        if (!isset($data) || empty($data)) {
+            $this->mensagem->messageError("Todos os dados precisam ser preenchidos de acordo com padrão solicitado no campo.")->flash();
+            return false;
+        }
+
+        if(!isset($data['nomeDespesa']) || empty($data['nomeDespesa'])) {
+            $this->mensagem->messageError("O nome identificador da despesa ". $part2Mensagem)->flash();
+            return false;
+        }
+
+        if(!isset($data['valor']) || empty($data['valor'])) {
+
+            $this->mensagem->messageError("O valor ". $part2Mensagem)->flash();
+            return false;
+        } elseif ($data['valor'] < 0) {
+            $this->mensagem->messageError("O valor não pode ser nulo ou negativo.")->flash();
+            return false;
+        }
+
+
+        if(!isset($data['typeOption']) || empty($data['typeOption'])) {
+            $this->mensagem->messageError("O tipo de custo ". $part2Mensagem)->flash();
+            return false;
+        } elseif ($data['typeOption'] != 'Entrada' && $data['typeOption'] != 'Saida') {
+            $this->mensagem->messageError("O tipo de custo precisa ser preenchido apenas com 'Entrada' ou 'Saida.")->flash();
+            return false;
+        }
+
+        if(!isset($data['usuario']) || empty($data['usuario'])) {
+            $this->mensagem->messageError("O Usuário ". $part2Mensagem)->flash();
+            return false;
+        } elseif ($data['usuario'] < 0){
+            $this->mensagem->messageError("O Usuário ". $part2Mensagem)->flash();
+            return false;
+        } elseif (!$this->personInstance->searchById($data['usuario'])) {
+            $this->mensagem->messageError("O Usuário informado não está cadastrado em nossa base de dados, '<a href=". Helpers::url('cadastrar-pessoa') .">CLIQUE AQUI</a>' para cadastrar")->flash();
             return false;
         }
 

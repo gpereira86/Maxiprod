@@ -3,7 +3,7 @@
         'name' => 'glauc/maxiprod',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'cf802d62ee25c3412e298dd24e94c27107d07488',
+        'reference' => '1f0876819485221294de270d252245d5e6159408',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'glauc/maxiprod' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'cf802d62ee25c3412e298dd24e94c27107d07488',
+            'reference' => '1f0876819485221294de270d252245d5e6159408',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -89,7 +89,7 @@
         'twig/twig' => array(
             'pretty_version' => '3.x-dev',
             'version' => '3.9999999.9999999.9999999-dev',
-            'reference' => 'f1c9039106ecc5a8182e1536027a6940ac4a8ab8',
+            'reference' => '586e3decdd2544ca362e703307f4caa4f08b2cfc',
             'type' => 'library',
             'install_path' => __DIR__ . '/../twig/twig',
             'aliases' => array(),

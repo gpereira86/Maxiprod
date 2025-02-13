@@ -512,12 +512,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "f1c9039106ecc5a8182e1536027a6940ac4a8ab8"
+                "reference": "586e3decdd2544ca362e703307f4caa4f08b2cfc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/f1c9039106ecc5a8182e1536027a6940ac4a8ab8",
-                "reference": "f1c9039106ecc5a8182e1536027a6940ac4a8ab8",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/586e3decdd2544ca362e703307f4caa4f08b2cfc",
+                "reference": "586e3decdd2544ca362e703307f4caa4f08b2cfc",
                 "shasum": ""
             },
             "require": {
@@ -584,7 +584,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-02-09T17:38:06+00:00"
+            "time": "2025-02-13T08:35:50+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

@@ -2,23 +2,94 @@
 
 {% block content %}
 
-<div>
+<div class="container mt-4">
 
-    <form action="">
+    <h4 class="text-center my-4 fw-bolder">
 
-        <div class="row">
-            <div class="col">
-                <input type="text" class="form-control" placeholder="Nome" aria-label="Nome">
+        {% if not formData.id %}
+            Cadastro de Usuário
+        {% else %}
+            Edição do Usuário: {{ formData.nome }}
+        {% endif %}
+    </h4>
+    <div class="row justify-content-center">
+        <div class="col-sm-9 col-12">
+            {{ flash() }}
+        </div>
+    </div>
+
+    <form action="{{ not formData.id ? url('cadastrar-pessoa') : url('editar-pessoa/' ~ formData.id) }}" method="POST">
+        <div class="row justify-content-center">
+            <input type="hidden" name="id" value="{{ formData.id is defined ? formData.id : '' }}">
+            <div class="col-sm-6 col-12">
+                <input type="text" name="nome" class="form-control mb-2" placeholder="Nome" aria-label="Nome"
+                       value="{{ formData.nome is defined ? formData.nome : '' }}">
             </div>
-            <div class="col">
-                <input type="number" class="form-control" placeholder="Idade" aria-label="Idade" min="0" step="1">
+            <div class="col-sm-3 col-12">
+                <input type="number" name="idade" class="form-control mb-2" placeholder="Idade" aria-label="Idade"
+                       min="0" step="1" value="{{ formData.idade is defined ? formData.idade : '' }}">
             </div>
         </div>
 
-        <button type="submit">Cadastrar</button>
-
+        <div class="text-center">
+            <button class="btn custom-primary-button mt-3" type="submit">
+                {% if not formData.id %}
+                    Cadastrar
+                {% else %}
+                    Salvar
+                {% endif %}
+            </button>
+        </div>
     </form>
 
+
+
 </div>
+
+<div class="container mt-5">
+    <hr class="custom-gray-line">
+    <h4 class="text-center mt-2 fw-bolder">Usuários Cadastrados</h4>
+
+    <div class="table-responsive overflow-auto">
+        <table class="table align-middle mt-4 custom-table-header">
+            <thead class="table-light text-center">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Idade</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for person in persons %}
+                    <tr>
+
+                        <td class="col-sm-1 text-center">{{person.id}}</td>
+                        <td class="col-sm-7 ps-5">{{person.name}}</td>
+                        <td class="col-sm-2 text-center">{{person.age}}</td>
+
+                        <td class="col-sm-2 text-center">
+                            <a href="{{ url('editar-pessoa/' ~ person.id) }}" class="d-inline-block text-decoration-none custom-primary-button warning">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                                <span class="d-none d-sm-inline">Editar</span>
+                            </a>
+                            &nbsp;
+                            <a href="{{ url('deletar-pessoa/' ~ person.id) }}" class="d-inline-block text-decoration-none custom-primary-button danger">
+                                <i class="fa-regular fa-trash-can"></i>
+                                <span class="d-none d-sm-inline">Excluir</span>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+</div>
+
+
+
 
 {% endblock %}

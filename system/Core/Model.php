@@ -301,7 +301,6 @@ abstract class Model
     protected function storage()
     {
         $dataSet = (array) $this->dataSet;
-
         return $dataSet;
     }
 

@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'glauc/maxiprod',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => 'cf802d62ee25c3412e298dd24e94c27107d07488',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'glauc/maxiprod' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => 'cf802d62ee25c3412e298dd24e94c27107d07488',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

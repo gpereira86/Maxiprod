@@ -1,6 +1,6 @@
 <?php
 
-use System\Controller\SiteController;
+use System\Controller\UserController;
 use System\Core\Helpers;
 use FastRoute\RouteCollector;
 use function FastRoute\simpleDispatcher;
@@ -10,14 +10,16 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r) {
 
     $r->addRoute('GET', $url, 'system\Controller\SiteController@index');
     $r->addRoute(['GET', 'POST'], "{$url}cadastrar-pessoa", 'system\Controller\SiteController@personRecord');
+    $r->addRoute('GET', "{$url}deletar-pessoa/{id:\d+}", 'system\Controller\SiteController@deletePerson');
+    $r->addRoute(['GET', 'POST'], "{$url}editar-pessoa/{id:\d+}", 'system\Controller\SiteController@editPerson');
 
 
-    $r->addRoute('GET', "{$url}deletar/{id:\d+}", 'system\Controller\SiteController@deleteRegister');
-//    $r->addRoute('POST', "{$url}cadastrar", 'system\Controller\SiteController@saveRegister');
-    $r->addRoute(['GET', 'POST'], "{$url}editar/{id:\d+}", 'system\Controller\SiteController@selectRegisterToUpdate');
+//    $r->addRoute('POST', "{$url}cadastrar", 'system\Controller\UserController@saveRegister');
     $r->addRoute(['GET', 'POST'], "{$url}salvar-edicao/{id:\d+}", 'system\Controller\SiteController@updateRegister');
     $r->addRoute('GET', "{$url}404", 'system\Controller\SiteControlador@error404');
 });
+
+
 
 // Capture the HTTP method and requested URI.
 $httpMethod = $_SERVER['REQUEST_METHOD'];
@@ -55,7 +57,7 @@ switch ($routeInfo[0]) {
         $controllerMethod = $handlerParts[1];
 
         // Instantiate the controller and call the appropriate method.
-        $siteController = new SiteController();
+        $siteController = new UserController();
         $siteController->$controllerMethod($variavel, $vars['pagina'] ?? null);
 
         break;

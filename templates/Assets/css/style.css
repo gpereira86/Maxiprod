@@ -12,10 +12,72 @@ header {
     margin: 15px 0;
     background-color: #FFFFFF;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.03);
-    border-bottom: 1px solid lightgray;
+    border-bottom: 1px solid #dddddd;
 
+    @media (max-width: 768px) {
+        h3 {
+            font-size: 1.2rem; /* Reduz tamanho do texto */
+        }
+        .logo {
+            width: 50px; /* Reduz a imagem */
+            height: auto;
+        }
+    }
 }
 
 header img {
     width: 2.2rem;
+}
+
+.table thead tr {
+    background: none !important;
+    background: radial-gradient(circle at left, #18A6D8, #1475AF, #0C1A64) !important;
+}
+
+.table thead th {
+    background: none !important;
+    color: white !important;
+}
+
+.custom-gray-line {
+    height: 1px;
+    background-color: #FBFBFB;
+    width: 100%;
+}
+
+.custom-primary-button {
+    color: #FFFFFF;
+    font-weight: 600;
+    background-color: #2794b9;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    text-align: center;
+    cursor: pointer;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+
+    &.warning {
+        color: black;
+        background-color: #e8b433;
+    }
+
+    &.danger {
+        background-color: #da4242;
+    }
+
+}
+
+.custom-primary-button:hover {
+    color: #FFFFFF;
+    background-color: #5fb2d6;
+
+    &.warning {
+        background-color: #e4bd70;
+    }
+
+    &.danger {
+        background-color: #e18787;
+    }
+
 }

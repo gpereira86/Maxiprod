@@ -5,6 +5,7 @@ namespace System\Controller;
 use System\Core\Controller;
 use System\Core\Helpers;
 use System\Model\PeopleModel;
+use System\Model\TransactionModel;
 
 class UserController extends Controller
 {
@@ -67,7 +68,11 @@ class UserController extends Controller
 
             if($person) {
                 $this->personInstance->delete("id = {$id}");
-                $this->mensagem->success("O usuário '{$person->data()->name}' foi excluído com sucesso.")->flash();
+                $transactionInstance = new TransactionModel();
+                $transactionInstance->delete("people_id = {$id}");
+                $this->mensagem->success("O usuário '{$person->data()->name}' e todas suas transações foiram excluídas com sucesso!")->flash();
+            } else {
+                $this->mensagem->messageError("Algo deu errado! | O id de usuário: '{$id}' não foi encontrado.")->flash();
             }
 
         } catch (\Exception $e) {
@@ -76,7 +81,6 @@ class UserController extends Controller
             Helpers::redirect("cadastrar-pessoa");
         }
     }
-
 
     public function editPerson(int $id): void
     {

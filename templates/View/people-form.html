@@ -75,7 +75,12 @@
                                     <span class="d-none d-sm-inline">Editar</span>
                                 </a>
                                 &nbsp;
-                                <a href="{{ url('deletar-pessoa/' ~ person.id) }}" class="d-inline-block text-decoration-none custom-primary-button danger">
+                                <a href="{{ url('deletar-pessoa/' ~ person.id) }}"
+                                   class="d-inline-block text-decoration-none custom-primary-button danger"
+                                   data-id="{{ person.id }}"
+                                   data-name="{{ person.name }}"
+                                   data-bs-toggle="modal"
+                                   data-bs-target="#deleteModal">
                                     <i class="fa-regular fa-trash-can"></i>
                                     <span class="d-none d-sm-inline">Excluir</span>
                                 </a>
@@ -87,11 +92,30 @@
         </div>
     </div>
 
-
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content text-center">
+                <div class="modal-header  bg-danger-subtle text-danger-emphasis">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirmação Ação</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Você tem certeza de que deseja excluir o usuário <strong id="modalPersonName"></strong>?<br>
+                    Esta ação apagará todas as transações deste usuário e não poderá ser desfeita.
+                </div>
+                <div class="modal-footer custom-gray-bg-color">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <a href="#" id="confirmDelete" class="btn btn-danger">Sim, Deletar</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 
+{% endblock %}
 
-
-
+{% block script %}
+<script src="{{ url('templates/Assets/js/modal.js') }}"></script>
 {% endblock %}

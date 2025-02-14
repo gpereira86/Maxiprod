@@ -344,6 +344,7 @@ abstract class Model
      */
     public function amount(): int
     {
+
         $stmt = Connection::getInstance()->prepare($this->query);
         $stmt->execute($this->params);
 

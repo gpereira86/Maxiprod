@@ -8,12 +8,12 @@ $dotenv->load();
 
 date_default_timezone_set('America/Sao_Paulo');
 
-define('SITE_NAME', 'Maxiprod - Glauco Pereira');
+define('COMPANY', 'Maxiprod');
+define('MY_NAME', 'Glauco Pereira');
 define('SITE_DESCRIPTION', 'Teste de Programação Maxiprod - Glauco Pereira');
 
 define('URL_PRODUTION', 'https://maxiprod.glaucopereira.com');
 define('URL_DEVELOPEMENT', 'http://localhost/maxiprod');
-
 
 if (Helpers::localhost()) {
 

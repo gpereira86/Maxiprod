@@ -17,75 +17,74 @@
         </div>
     </div>
 
+
+
     <form action="{{ not formData.id ? url('cadastrar-transacao') : url('editar-transacao/' ~ formData.id) }}" method="POST">
 
         <input type="hidden" name="id" value="{{ formData.id is defined ? formData.id : '' }}">
 
         <div class="row justify-content-center mb-3">
-            <div class="col-sm-9 col-12">
-                <div  class="pb-1">
-                    <span>Tipo de despesa:</span>
-                </div>
-
-                <input type="radio" class="btn-check" name="typeOption" id="option1" autocomplete="off" value="Entrada"
-                       {% if formData.typeOption == 'Entrada' %}checked{% endif %}>
-                <label class="btn btn-outline-success" for="option1">Entrada</label>
-
-                <input type="radio" class="btn-check" name="typeOption" id="option2" autocomplete="off" value="Saida"
-                       {% if formData.typeOption == 'Saida' %}checked{% endif %}>
-                <label class="btn btn-outline-danger" for="option2">Saída</label>
-            </div>
-        </div>
-
-        <div class="row justify-content-center mb-2">
-
-            <div class="col-sm-4 col-12">
-                <input type="text" name="nomeDespesa" class="form-control mb-2" placeholder="Insira aqui a Nome identificador da despesa" aria-label="Nome identificador da despesa"
-                       value="{{ formData.nomeDespesa is defined ? formData.nomeDespesa : '' }}">
-            </div>
-
-            <div class="col-sm-2 col-12">
-                <input type="number" name="valor" class="form-control mb-2" placeholder="Valor (formato 0.00)" aria-label="valor"
-                       min="0" step="0.01" value="{{ formData.valor is defined ? formData.valor : '' }}">
-            </div>
-
             <div class="col-sm-3 col-12">
-                <select class="form-select" aria-label="Default select example" name="usuario">
-                    <option selected disabled>--> Selecione o Usuário aqui <--</option>
-
+                <div class="pb-1">
+                    <span>Responsável pela transação:</span>
+                </div>
+                <select class="form-select" aria-label="Default select example" name="usuario" id="usuarioSelect">
+                    <option selected disabled>-- Selecione o responsável aqui --</option>
                     {% for person in persons %}
-                    <option value="{{ person.id }}" {% if person.id == formData.usuario %}selected{% endif %}>
+                    <option age="{{person.age}}" value="{{ person.id }}" {% if person.id == formData.usuario %}selected{% endif %}>
                         {{ person.name }}
                     </option>
                     {% endfor %}
-
                 </select>
             </div>
+
+            <div class="col-sm-6 col-12">
+                <div class="pb-1">
+                    <span>Tipo de despesa:</span>
+                </div>
+
+
+                <input type="radio" class="btn-check" name="typeOption" id="option1" autocomplete="off" value="Entrada" disabled
+                {% if formData.typeOption == 'Entrada' %}checked{% endif %}>
+                <label class="btn btn-outline-success" for="option1">Entrada</label>
+
+                <input type="radio" class="btn-check" name="typeOption" id="option2" autocomplete="off" value="Saida" disabled
+                {% if formData.typeOption == 'Saida' %}checked{% endif %}>
+                <label class="btn btn-outline-danger" for="option2">Saída</label>
+
+            </div>
+
+        </div>
+
+        <div class="row justify-content-center mb-2">
+            <div class="col-sm-6 col-12">
+                <input type="text" name="nomeDespesa" class="form-control mb-2" placeholder="Insira aqui a Nome identificador da despesa" aria-label="Nome identificador da despesa" value="{{ formData.nomeDespesa is defined ? formData.nomeDespesa : '' }}" disabled>
+            </div>
+
+            <div class="col-sm-3 col-12">
+                <input type="number" name="valor" class="form-control mb-2" placeholder="Valor (formato 0.00)" aria-label="valor" min="0" step="0.01" value="{{ formData.valor is defined ? formData.valor : '' }}" disabled>
+            </div>
+
 
         </div>
 
         <div class="row justify-content-center">
-
             <div class="col-sm-9 col-12">
-                    <textarea class="form-control"
-                              rows="3"
-                              placeholder="Se necessário, inclua seu(s) comentário(s) sobre o lançamento aqui..."
-                              id="observacao"
-                              name="observacao">{{ formData.observacao|trim }}</textarea>
+                <textarea class="form-control" rows="3" placeholder="Se necessário, inclua seu(s) comentário(s) sobre o lançamento aqui..." id="observacao" name="observacao" disabled>{{ formData.observacao|trim }}</textarea>
             </div>
-
         </div>
 
         <div class="text-center">
-            <button class="btn custom-primary-button mt-3" type="submit">
+            <button class="btn custom-primary-button mt-3" type="submit" disabled>
                 {% if not formData.id %}
-                    Cadastrar
+                Cadastrar
                 {% else %}
-                    Salvar
+                Salvar
                 {% endif %}
             </button>
         </div>
     </form>
+
 
 
 
@@ -135,7 +134,7 @@
                         {% endif %}
 
 
-                        <td class="col-sm text-center">{{transaction.notes}}</td>
+                        <td class="col-sm text-center">{{transaction.notes is empty ? ' --- ' : transaction.notes}}</td>
 
                         <td class="col-sm text-center">
                             <a href="{{ url('editar-transacao/' ~ transaction.id) }}" class="d-inline-block text-decoration-none custom-primary-button warning">
@@ -158,7 +157,8 @@
 
 </div>
 
+{% endblock %}
 
-
-
+{% block script %}
+<script src="{{ url('templates/Assets/js/transactions.js') }}"></script>
 {% endblock %}

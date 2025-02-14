@@ -76,6 +76,17 @@ class Template
                 $time = microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"];
                 return number_format($time, 4);
             }),
+            new TwigFunction('menu', function () {
+                $uri = $_SERVER['REQUEST_URI'];
+                $menu =[
+                    ['name' => 'Home', 'url' => '', 'active' => (!str_contains($uri, '404') && !str_contains($uri, 'pessoa') && !str_contains($uri, 'transacao') && !str_contains($uri, 'totais')) ? 'custom-active' : ''],
+                    ['name' => 'Cadastro de Pessoa', 'url' => 'cadastrar-pessoa', 'active' => str_contains($uri, 'pessoa') ? 'custom-active': ''],
+                    ['name' => 'Cadastro de Transação', 'url' => 'cadastrar-transacao', 'active' => str_contains($uri, 'transacao') ? 'custom-active': ''],
+                    ['name' => 'Totais', 'url' => 'totais', 'active' => str_contains($uri, 'totais') ? 'custom-active': ''],
+                ];
+                return $menu;
+            }),
+
         ];
 
         foreach ($functions as $function) {

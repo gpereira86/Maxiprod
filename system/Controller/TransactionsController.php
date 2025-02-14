@@ -157,7 +157,6 @@ class TransactionsController extends Controller
             return false;
         }
 
-
         if(!isset($data['typeOption']) || empty($data['typeOption'])) {
             $this->mensagem->messageError("O tipo de custo ". $part2Mensagem)->flash();
             return false;
@@ -166,16 +165,25 @@ class TransactionsController extends Controller
             return false;
         }
 
+
+
         if(!isset($data['usuario']) || empty($data['usuario'])) {
             $this->mensagem->messageError("O Usuário ". $part2Mensagem)->flash();
             return false;
-        } elseif ($data['usuario'] < 0){
+        } elseif ($data['usuario'] < 0) {
             $this->mensagem->messageError("O Usuário ". $part2Mensagem)->flash();
             return false;
-        } elseif (!$this->personInstance->searchById($data['usuario'])) {
-            $this->mensagem->messageError("O Usuário informado não está cadastrado em nossa base de dados, '<a href=". Helpers::url('cadastrar-pessoa') .">CLIQUE AQUI</a>' para cadastrar")->flash();
+        } elseif (!is_numeric($data['usuario']) || !$this->personInstance->searchById($data['usuario'])) {
+            $this->mensagem->messageError("O Usuário informado não está cadastrado em nossa base de dados, antes de mais nada, cadastre-o.")->flash();
             return false;
         }
+
+        $user = $this->personInstance->searchById($data['usuario']);
+        if ($user->data()->age < 18 && $data['typeOption'] == 'Entrada') {
+            $this->mensagem->messageError("Usuários com menos de 18 anos não podem registrar transações de 'Entrada', apenas de 'Saída'.")->flash();
+            return false;
+        }
+
 
         return true;
     }

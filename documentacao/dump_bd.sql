@@ -118,7 +118,7 @@ INSERT INTO `transactions` (`id`, `expense_name`, `cost`, `cost_type`, `notes`, 
 (47, 'Assinatura de revista', 100.00, 'Saida', 'Revista de negócios', 7),
 (48, 'Compra de cabo HDMI', 80.00, 'Entrada', 'Cabo 4K', 8),
 (49, 'Manutenção de elevador', 500.00, 'Entrada', 'Troca de peças', 9),
-(50, 'Compra de papel reciclado', 200.00, 'Saida', 'Sustentabilidade no escritório', 10),
+(50, 'Compra de papel reciclado', 200.00, 'Saida', 'Sustentabilidade no escritório', 10);
 
 --
 -- Indexes for dumped tables

@@ -54,12 +54,15 @@ Sistema desenvolvido em PHP 8.4 utilizando arquiterura MVC
    - No arquivo `.htaccess`, altere o rewrite de `/maxiprod/` para `/seu-diretorio-local/`;
    - Caso não tenha o composer instalado, instale. Página oficial com detalhes: https://getcomposer.org/doc/00-intro.md, ou basta procurar no youtube como fazer;
    - Realize o dump do autoload pelo terminal (necessário estar no caminho raiz do projeto) com o comando `composer dump-autoload` para ter certeza de que irá funcionar: 
-
+   
 
 5. Abra o navegador e acesse o endereço do seu projeto:
    ```
    http://localhost/seu-diretorio-local
    ```
+   <br>
+   
+    > Em caso de necessidade de proteger algum tipo de informação e ainda assim usar em sistema, alterar o arquivo `env` para `.env` e seguir o padrão existente no arquivo.<br>Dúvidas? Pode me procurar ou consultar a documentação em: https://github.com/vlucas/phpdotenv.
 
 ## Observações
 

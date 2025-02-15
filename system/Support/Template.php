@@ -7,26 +7,23 @@ use Twig\TwigFunction;
 use System\Core\Helpers;
 
 /**
- * Class Template
+ * Classe Template
  *
- * Provides integration with the Twig templating engine, allowing rendering of templates
- * and the addition of custom helper functions for use within templates.
+ * Fornece integração com o motor de templates Twig, permitindo a renderização de templates
+ * e a adição de funções auxiliares personalizadas para uso dentro dos templates.
  *
  * @package system\Support
  */
 class Template
 {
-    /**
-     * @var \Twig\Environment The instance of the Twig environment.
-     */
     private \Twig\Environment $twig;
 
     /**
-     * Template constructor.
+     * Construtor da classe Template.
      *
-     * Sets up the Twig environment, assigns the template directory, and registers custom helpers.
+     * Configura o ambiente Twig, atribui o diretório dos templates e registra funções auxiliares personalizadas.
      *
-     * @param string $diretorio Path to the directory containing Twig template files.
+     * @param string $diretorio Caminho para o diretório que contém os arquivos de templates Twig.
      */
     public function __construct(string $diretorio)
     {
@@ -40,15 +37,15 @@ class Template
     }
 
     /**
-     * Renders a template with the given data.
+     * Renderiza um template com os dados fornecidos.
      *
-     * @param string $view  The template file name to render.
-     * @param array  $dataSet An associative array of data to be passed to the template.
-     * @return string The rendered template content as a string.
+     * @param string $view O nome do arquivo do template a ser renderizado.
+     * @param array  $dataSet Um array associativo com os dados que serão passados para o template.
+     * @return string O conteúdo do template renderizado como uma string.
      *
-     * @throws \Twig\Error\LoaderError  If the template cannot be found.
-     * @throws \Twig\Error\RuntimeError If an error occurs during template rendering.
-     * @throws \Twig\Error\SyntaxError  If there is a syntax error in the template.
+     * @throws \Twig\Error\LoaderError Se o template não puder ser encontrado.
+     * @throws \Twig\Error\RuntimeError Se ocorrer um erro durante a renderização do template.
+     * @throws \Twig\Error\SyntaxError Se houver um erro de sintaxe no template.
      */
     public function toRender(string $view, array $dataSet): string
     {
@@ -56,13 +53,13 @@ class Template
     }
 
     /**
-     * Registers custom helper functions for use within Twig templates.
+     * Registra funções auxiliares personalizadas para uso dentro dos templates Twig.
      *
-     * The following helpers are available:
-     * - `url(string|null $url)`: Generates a complete URL using Helpers::url().
-     * - `flash()`: Retrieves and displays flash messages using Helpers::flash().
-     * - `maskCpf(string $cpf)`: Formats a CPF string using Helpers::maskCPF().
-     * - `timeLoading()`: Calculates the script execution time in seconds.
+     * As seguintes funções auxiliares estão disponíveis:
+     * - `url(string|null $url)`: Gera uma URL completa usando a função Helpers::url().
+     * - `flash()`: Exibe mensagens de flash usando a função Helpers::flash().
+     * - `timeLoading()`: Calcula o tempo de execução do script em segundos.
+     * - `menu()`: Gera o menu de navegação com base na URL atual.
      *
      * @return void
      */
@@ -71,7 +68,6 @@ class Template
         $functions = [
             new TwigFunction('url', fn(string $url = null) => Helpers::url($url)),
             new TwigFunction('flash', fn() => Helpers::flash()),
-            new TwigFunction('maskCpf', fn(string $cpf) => Helpers::maskCPF($cpf)),
             new TwigFunction('timeLoading', function () {
                 $time = microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"];
                 return number_format($time, 4);

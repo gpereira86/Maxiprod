@@ -3,22 +3,21 @@
 namespace System\Core;
 
 use System\Core\Session;
-use Exception;
 
 /**
- * Class Helpers
+ * Classe Helpers
  *
- * A utility class providing a variety of helper methods for common operations,
- * including validation, string manipulation, URL management, and environment checks.
+ * Uma classe utilitária que fornece diversos métodos auxiliares para operações comuns,
+ * incluindo validação, manipulação de strings, gerenciamento de URLs e verificações de ambiente.
  *
  * @package system\Core
  */
 class Helpers
 {
     /**
-     * Checks if the application is running on a localhost server.
+     * Verifica se a aplicação está sendo executada em um servidor localhost.
      *
-     * @return bool Returns true if the server is localhost, false otherwise.
+     * @return bool Retorna true se o servidor for localhost, false caso contrário.
      */
     public static function localhost(): bool
     {
@@ -28,9 +27,9 @@ class Helpers
     }
 
     /**
-     * Retrieves and displays a flash message from the session, if available.
+     * Recupera e exibe uma mensagem flash da sessão, se disponível.
      *
-     * @return string|null The flash message content or null if no message is found.
+     * @return string|null O conteúdo da mensagem flash ou null se nenhuma mensagem for encontrada.
      */
     public static function flash(): ?string
     {
@@ -44,9 +43,9 @@ class Helpers
     }
 
     /**
-     * Redirects the user to a specified URL or the default application URL.
+     * Redireciona o usuário para uma URL especificada ou para a URL padrão da aplicação.
      *
-     * @param string|null $url The target URL. Defaults to the application's base URL.
+     * @param string|null $url A URL de destino. Por padrão, redireciona para a URL base da aplicação.
      * @return void
      */
     public static function redirect(string $url = null): void
@@ -60,21 +59,10 @@ class Helpers
     }
 
     /**
-     * Removes all non-numeric characters from a string.
+     * Gera uma URL completa com base no ambiente (desenvolvimento ou produção).
      *
-     * @param string $numero The input string containing numbers and other characters.
-     * @return string The sanitized string containing only numeric characters.
-     */
-    public static function clearNumber(string $numero): string
-    {
-        return preg_replace('/[^0-9]/', '', $numero);
-    }
-
-    /**
-     * Generates a full URL based on the environment (development or production).
-     *
-     * @param string|null $url The relative URL path. Defaults to the base URL.
-     * @return string The full URL.
+     * @param string|null $url O caminho da URL relativa. Por padrão, utiliza a URL base.
+     * @return string A URL completa.
      */
     public static function url(string $url = null): string
     {
@@ -86,51 +74,5 @@ class Helpers
         }
 
         return $ambiente . '/' . $url;
-    }
-
-    /**
-     * Applies a CPF mask to a numeric string.
-     *
-     * @param string $cpf The numeric string representing a CPF (Brazilian tax ID).
-     * @return string The formatted CPF with the mask applied.
-     */
-    public static function maskCPF(string $cpf): string
-    {
-        $cpf = self::clearNumber($cpf);
-
-        if (strlen($cpf) === 11) {
-            return preg_replace('/(\d{3})(\d{3})(\d{3})(\d{2})/', '$1.$2.$3-$4', $cpf);
-        }
-
-        return $cpf;
-    }
-
-    /**
-     * Validates a CPF (Brazilian tax ID) for format and integrity.
-     *
-     * @param string $cpf The CPF string to validate.
-     * @throws Exception If the CPF is invalid or improperly formatted.
-     * @return bool True if the CPF is valid.
-     */
-    public static function cpfValidation(string $cpf): bool
-    {
-        $cpf = self::clearNumber($cpf);
-
-        if (mb_strlen($cpf) !== 11 || preg_match('/(\d)\1{10}/', $cpf)) {
-            throw new Exception('The CPF must have 11 digits.');
-        }
-
-        for ($t = 9; $t < 11; $t++) {
-            for ($d = 0, $c = 0; $c < $t; $c++) {
-                $d += $cpf[$c] * (($t + 1) - $c);
-            }
-            $d = ((10 * $d) % 11) % 10;
-
-            if ($cpf[$c] != $d) {
-                throw new Exception('Invalid CPF.');
-            }
-        }
-
-        return true;
     }
 }

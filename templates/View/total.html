@@ -2,19 +2,75 @@
 
 {% block content %}
 
-<h1>TOTAL</h1>
+<h2 class="mt-4 mb-5">Receitas e Despesas:</h2>
 {{ flash() }}
 
-<form action="{{ url() }}" method="POST" style="max-width: 400px;">
-    <select class="form-select form-control" aria-label="Default select example" name="filtro" id="userFilter" onchange="this.form.submit()">
-        <option selected disabled>-- Selecione aqui --</option>
-        {% for person in persons %}
-        <option value="{{ person.id }}" {% if person.id == formData.usuario %}selected{% endif %}>
-            {{ person.name }}
-        </option>
-        {% endfor %}
-    </select>
-</form>
+
+
+<div class="container mt-2 mb-5 overflow-y-auto">
+    <h4 class="text-center my-2 fw-bolder">
+        Balanço de Receitas e Despesas Por Usuário
+    </h4>
+
+    <div class="table-responsive">
+        <table class="table align-middle mt-3">
+            <thead class="text-center">
+            <tr>
+                <th scope="col">Usuário</th>
+                <th scope="col">Idade</th>
+                <th scope="col">Receitas</th>
+                <th scope="col">Despesas</th>
+                <th scope="col">Saldo</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for personAmount in amountPerPerson %}
+
+            <tr>
+                <td class="col-sm text-center">{{ personAmount.name }}</td>
+                <td class="col-sm text-center">{{ personAmount.age }}</td>
+
+                <td class="col-sm ps-5 text-center">
+                    {{ 'R$ ' ~ personAmount.incomes|number_format(2, ',', '.') }}
+                </td>
+
+                <td class="col-sm ps-5 text-center fw-semibold" style="color: #da4242;">
+                        {{ '( R$ ' ~ personAmount.expenses|number_format(2, ',', '.') ~ ' )' }}
+                </td>
+
+                <td class="col-sm ps-5 text-center">
+                    {% if personAmount.balance < 0 %}
+                        <span class="fw-semibold" style="color: #da4242;">{{ '( R$ ' ~ (personAmount.balance * -1)|number_format(2, ',', '.') ~ ' )' }}</span>
+                    {% else %}
+                        {{ 'R$ ' ~ personAmount.balance|number_format(2, ',', '.') }}
+                    {% endif %}
+                </td>
+
+            </tr>
+            {% endfor %}
+
+            </tbody>
+            <tfoot class="table-primary custom-tfoot">
+                <tr>
+                    <td colspan="2" class="col-sm text-center" >Total Geral</td>
+                    <td class="col-sm ps-5 text-center">{{ 'R$ ' ~ amountTotal.incomes|replace({',': '.'})|number_format(2, ',', '.') }}</td>
+                    <td class="col-sm ps-5 text-center" style="color: #501919;">{{ '( R$ ' ~ amountTotal.expenses|replace({',': '.'})|number_format(2, ',', '.') ~ ' )' }}</td>
+                    <td class="col-sm ps-5 text-center">
+                        {% if amountTotal.balance < 0 %}
+                            <span class="" style="color: #501919;">{{ '( R$ ' ~ (amountTotal.balance * -1)|number_format(2, ',', '.') ~ ' )' }}</span>
+                        {% else %}
+                            {{ 'R$ ' ~ amountTotal.balance|number_format(2, ',', '.') }}
+                        {% endif %}
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="text-danger text-end fw-semibold">
+        <p>* Valores de despesa ou negativos são representados pela cor vermelha e exibição entre parênteses.</p>
+    </div>
+</div>
 
 
 {% endblock %}

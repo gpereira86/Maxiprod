@@ -3,10 +3,10 @@
     <head>
         <link rel="icon" href="https://maxiprod.com.br/wp-content/uploads/2023/05/Icone-p-Wordpress-512-%C3%97-512-px-150x150.png" type="image/x-icon">
         <title>
-            {% if titulo %}
-            {{ titulo }}
+            {% if constant('COMPANY') is defined and constant('MY_NAME') is defined %}
+                {{ constant('COMPANY') }} - {{ constant('MY_NAME') }}
             {% else %}
-            {{ constant('COMPANY') }} - {{ constant('MY_NAME') }}
+                'Glauco Perreira'
             {% endif %}
         </title>
         <meta charset="UTF-8">

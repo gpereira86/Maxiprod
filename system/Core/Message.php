@@ -3,39 +3,32 @@
 namespace System\Core;
 
 /**
- * Class Message
+ * Classe Message
  *
- * This class is responsible for creating and rendering styled messages, such as success, error, warning,
- * and notifications, using Bootstrap classes. It provides methods for filtering and sanitizing message content
- * and includes support for flash messaging through session storage.
+ * Esta classe é responsável por criar e renderizar mensagens estilizadas, como sucesso, erro, aviso e notificações,
+ * utilizando classes do Bootstrap. Ela fornece métodos para filtrar e higienizar o conteúdo das mensagens
+ * e inclui suporte para mensagens temporárias através do armazenamento na sessão.
  */
 class Message
 {
-    /**
-     * @var string The text content of the message.
-     */
     private $text;
-
-    /**
-     * @var string The CSS classes used to style the message.
-     */
     private $css;
 
     /**
-     * Converts the Message object to a string representation.
+     * Converte o objeto Message para uma representação de string.
      *
-     * @return string The rendered message HTML.
+     * @return string O HTML renderizado da mensagem.
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->messageRender();
     }
 
     /**
-     * Sets the message as a success message.
+     * Define a mensagem como uma mensagem de sucesso.
      *
-     * @param string $message The success message text.
-     * @return $this The current Message instance for method chaining.
+     * @param string $message O texto da mensagem de sucesso.
+     * @return $this A instância atual da classe Message para encadeamento de métodos.
      */
     public function success(string $message): Message
     {
@@ -45,10 +38,10 @@ class Message
     }
 
     /**
-     * Sets the message as an error message.
+     * Define a mensagem como uma mensagem de erro.
      *
-     * @param string $message The error message text.
-     * @return $this The current Message instance for method chaining.
+     * @param string $message O texto da mensagem de erro.
+     * @return $this A instância atual da classe Message para encadeamento de métodos.
      */
     public function messageError(string $message): Message
     {
@@ -58,10 +51,10 @@ class Message
     }
 
     /**
-     * Sets the message as a warning message.
+     * Define a mensagem como uma mensagem de aviso.
      *
-     * @param string $message The warning message text.
-     * @return $this The current Message instance for method chaining.
+     * @param string $message O texto da mensagem de aviso.
+     * @return $this A instância atual da classe Message para encadeamento de métodos.
      */
     public function messageAlert(string $message): Message
     {
@@ -71,10 +64,10 @@ class Message
     }
 
     /**
-     * Sets the message as a notification message.
+     * Define a mensagem como uma mensagem de notificação.
      *
-     * @param string $message The notification message text.
-     * @return $this The current Message instance for method chaining.
+     * @param string $message O texto da mensagem de notificação.
+     * @return $this A instância atual da classe Message para encadeamento de métodos.
      */
     public function messageNotify(string $message): Message
     {
@@ -84,24 +77,24 @@ class Message
     }
 
     /**
-     * Renders the message as an HTML string.
+     * Renderiza a mensagem como uma string HTML.
      *
-     * Includes a dismiss button for messages styled with Bootstrap.
+     * Inclui um botão de descarte para mensagens estilizadas com Bootstrap.
      *
-     * @return string The rendered HTML for the message.
+     * @return string O HTML renderizado para a mensagem.
      */
     public function messageRender(): string
     {
-        $button = '<div class="col-auto"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+        $button = '<div class="col-auto"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button></div>';
 
         return "<div class='{$this->css}'><div class='row d-flex justify-content-between align-items-center'><div class='col'>{$this->text}</div> $button</div></div>";
     }
 
     /**
-     * Filters and sanitizes the message text to prevent XSS attacks.
+     * Filtra e higieniza o texto da mensagem para prevenir ataques XSS.
      *
-     * @param string $message The raw message text.
-     * @return string The sanitized message text.
+     * @param string $message O texto bruto da mensagem.
+     * @return string O texto da mensagem higienizado.
      */
     private function messageFilter(string $message): string
     {
@@ -109,9 +102,9 @@ class Message
     }
 
     /**
-     * Stores the current message in the session as a flash message.
+     * Armazena a mensagem atual na sessão como uma mensagem flash.
      *
-     * Flash messages are temporary and meant to be displayed once.
+     * Mensagens flash são temporárias e devem ser exibidas apenas uma vez.
      *
      * @return void
      */

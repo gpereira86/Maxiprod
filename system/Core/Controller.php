@@ -5,38 +5,29 @@ namespace System\Core;
 use System\Support\Template;
 
 /**
- * Class Controller
+ * Classe Controller
  *
- * Represents a base controller in the application, providing access to common resources
- * such as the template rendering engine and message handling.
+ * Representa um controlador base na aplicação, fornecendo acesso a recursos comuns,
+ * como o motor de renderização de templates e o gerenciamento de mensagens.
  *
  * @package system\Core
  */
 class Controller
 {
-    /**
-     * @var Template $template
-     * The template rendering engine used for managing views.
-     */
     protected Template $template;
+    protected Message $message;
 
     /**
-     * @var Message $mensagem
-     * The message handler used for displaying and managing system messages.
-     */
-    protected Message $mensagem;
-
-    /**
-     * Controller constructor.
+     * Construtor do Controller.
      *
-     * Initializes the base controller with a specified template directory
-     * and prepares the message handling system.
+     * Inicializa o controlador base com um diretório de templates especificado
+     * e prepara o sistema de gerenciamento de mensagens.
      *
-     * @param string $diretorio The directory where the template files are located.
+     * @param string $diretorio O diretório onde os arquivos de template estão localizados.
      */
     public function __construct(string $diretorio)
     {
         $this->template = new Template($diretorio);
-        $this->mensagem = new Message();
+        $this->message = new Message();
     }
 }

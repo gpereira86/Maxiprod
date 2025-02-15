@@ -7,65 +7,32 @@ use System\Core\Message;
 
 
 /**
- * Class Model
+ * Classe Model
  *
- * Abstract class for interacting with the database.
- * Provides methods for CRUD operations and data handling.
- * Implements common patterns for filtering, querying, and managing data in a database.
+ * Classe abstrata para interação com o banco de dados.
+ * Fornece métodos para operações CRUD e manipulação de dados.
+ * Implementa padrões comuns para filtragem, consulta e gerenciamento de dados no banco de dados.
  */
 abstract class Model
 {
-    /**
-     * @var \stdClass Dataset of the data.
-     */
+
     protected $dataSet;
-
-    /**
-     * @var string SQL query string.
-     */
     protected $query;
-
-    /**
-     * @var string|int Error code from the last operation.
-     */
     protected $error;
-
-    /**
-     * @var array Query parameters.
-     */
     protected $params;
-
-    /**
-     * @var string Table name.
-     */
     protected $table;
-
-    /**
-     * @var string|null SQL ORDER BY clause.
-     */
     protected $order;
 
-    /**
-     * @var string|null SQL LIMIT clause.
-     */
     protected $limit;
-
-    /**
-     * @var string|null SQL OFFSET clause.
-     */
     protected $offset;
-
-    /**
-     * @var Message Object for handling error or success messages.
-     */
     protected $message;
 
     /**
-     * Model constructor.
+     * Construtor do Model.
      *
-     * Initializes the table name and the message object.
+     * Inicializa o nome da tabela e o objeto de mensagem.
      *
-     * @param string $table Table name.
+     * @param string $table Nome da tabela.
      */
     public function __construct(string $table)
     {
@@ -74,10 +41,10 @@ abstract class Model
     }
 
     /**
-     * Sets the SQL ORDER BY clause for the query.
+     * Define a cláusula ORDER BY da SQL para a consulta.
      *
-     * @param string $order The ORDER BY clause.
-     * @return $this The current instance of the class.
+     * @param string $order A cláusula ORDER BY.
+     * @return $this A instância atual da classe.
      */
     public function order(string $order)
     {
@@ -86,10 +53,10 @@ abstract class Model
     }
 
     /**
-     * Sets the SQL LIMIT clause for the query.
+     * Define a cláusula LIMIT da SQL para a consulta.
      *
-     * @param string $limit The LIMIT clause.
-     * @return $this The current instance of the class.
+     * @param string $limit A cláusula LIMIT.
+     * @return $this A instância atual da classe.
      */
     public function limit(string $limit)
     {
@@ -98,10 +65,10 @@ abstract class Model
     }
 
     /**
-     * Sets the SQL OFFSET clause for the query.
+     * Define a cláusula OFFSET da SQL para a consulta.
      *
-     * @param string $offset The OFFSET clause.
-     * @return $this The current instance of the class.
+     * @param string $offset A cláusula OFFSET.
+     * @return $this A instância atual da classe.
      */
     public function offset(string $offset)
     {
@@ -110,9 +77,9 @@ abstract class Model
     }
 
     /**
-     * Retrieves the error code from the last operation.
+     * Recupera o código de erro da última operação.
      *
-     * @return string|int The error code.
+     * @return string|int O código de erro.
      */
     public function error()
     {
@@ -120,9 +87,9 @@ abstract class Model
     }
 
     /**
-     * Retrieves the message object containing error or success messages.
+     * Recupera o objeto de mensagens que contém as mensagens de erro ou sucesso.
      *
-     * @return Message The message object.
+     * @return Message O objeto de mensagens.
      */
     public function message()
     {
@@ -130,9 +97,9 @@ abstract class Model
     }
 
     /**
-     * Retrieves the dataset stored in the object.
+     * Recupera o conjunto de dados armazenados no objeto.
      *
-     * @return \stdClass The dataset.
+     * @return \stdClass O conjunto de dados.
      */
     public function data()
     {
@@ -140,10 +107,10 @@ abstract class Model
     }
 
     /**
-     * Sets a property in the data set.
+     * Define uma propriedade no conjunto de dados.
      *
-     * @param string $name The property name.
-     * @param mixed $value The value to set.
+     * @param string $name O nome da propriedade.
+     * @param mixed $value O valor a ser definido.
      */
     public function __set($name, $value)
     {
@@ -155,10 +122,10 @@ abstract class Model
     }
 
     /**
-     * Checks if a property exists in the data set.
+     * Verifica se uma propriedade existe no conjunto de dados.
      *
-     * @param string $name The property name.
-     * @return bool Returns true if the property exists.
+     * @param string $name O nome da propriedade.
+     * @return bool Retorna true se a propriedade existir.
      */
     public function __isset($name)
     {
@@ -166,10 +133,10 @@ abstract class Model
     }
 
     /**
-     * Retrieves a property from the data set.
+     * Recupera uma propriedade do conjunto de dados.
      *
-     * @param string $name The property name.
-     * @return mixed The value of the property, or null if it does not exist.
+     * @param string $name O nome da propriedade.
+     * @return mixed O valor da propriedade, ou null se não existir.
      */
     public function __get($name)
     {
@@ -177,12 +144,12 @@ abstract class Model
     }
 
     /**
-     * Performs a search in the database, with optional filtering.
+     * Realiza uma busca no banco de dados, com filtragem opcional.
      *
-     * @param string|null $terms Filtering terms.
-     * @param string|null $params Query parameters.
-     * @param string $columns The columns to select.
-     * @return $this The current instance of the class.
+     * @param string|null $terms Termos de filtragem.
+     * @param string|null $params Parâmetros da consulta.
+     * @param string $columns As colunas a serem selecionadas.
+     * @return $this A instância atual da classe.
      */
     public function search(?string $terms = null, ?string $params = null, string $columns = '*')
     {
@@ -197,10 +164,10 @@ abstract class Model
     }
 
     /**
-     * Retrieves the results of the query.
+     * Recupera os resultados da consulta.
      *
-     * @param bool $all If true, returns all results.
-     * @return mixed Returns the results or null if no results found.
+     * @param bool $all Se for true, retorna todos os resultados.
+     * @return mixed Retorna os resultados ou null se não houver resultados.
      */
     public function result(bool $all = false)
     {
@@ -224,10 +191,10 @@ abstract class Model
     }
 
     /**
-     * Registers a new record in the database.
+     * Registra um novo registro no banco de dados.
      *
-     * @param array $dataSet Data to insert into the database.
-     * @return int|null The ID of the new record, or null if an error occurred.
+     * @param array $dataSet Dados a serem inseridos no banco de dados.
+     * @return int|null O ID do novo registro, ou null se ocorreu um erro.
      */
     protected function register(array $dataSet)
     {
@@ -247,11 +214,11 @@ abstract class Model
     }
 
     /**
-     * Updates a record in the database.
+     * Atualiza um registro no banco de dados.
      *
-     * @param array $dataSet Data to update in the database.
-     * @param string $terms Filtering terms for the update.
-     * @return int|null The number of affected rows, or null if an error occurred.
+     * @param array $dataSet Dados a serem atualizados no banco de dados.
+     * @param string $terms Termos de filtragem para a atualização.
+     * @return int|null O número de linhas afetadas, ou null se ocorreu um erro.
      */
     protected function update(array $dataSet, string $terms)
     {
@@ -277,10 +244,10 @@ abstract class Model
     }
 
     /**
-     * Filters the data to prevent invalid values.
+     * Filtra os dados para evitar valores inválidos.
      *
-     * @param array $dataSet Data to filter.
-     * @return array The filtered data.
+     * @param array $dataSet Dados a serem filtrados.
+     * @return array Os dados filtrados.
      */
     private function dataFilter(array $dataSet)
     {
@@ -294,9 +261,9 @@ abstract class Model
     }
 
     /**
-     * Returns the data stored in the object as an array.
+     * Retorna os dados armazenados no objeto como um array.
      *
-     * @return array The data from the object.
+     * @return array Os dados do objeto.
      */
     protected function storage()
     {
@@ -305,10 +272,10 @@ abstract class Model
     }
 
     /**
-     * Searches for a record by its ID.
+     * Busca um registro pelo seu ID.
      *
-     * @param int $id The ID of the record to search for.
-     * @return $this The current instance of the class.
+     * @param int $id O ID do registro a ser buscado.
+     * @return $this A instância atual da classe.
      */
     public function searchById(int $id)
     {
@@ -317,10 +284,10 @@ abstract class Model
     }
 
     /**
-     * Deletes a record from the database.
+     * Deleta um registro do banco de dados.
      *
-     * @param string $termos Filtering terms for the deletion.
-     * @return bool|null Returns true if deletion was successful, or null if an error occurred.
+     * @param string $termos Termos de filtragem para a exclusão.
+     * @return bool|null Retorna true se a exclusão foi bem-sucedida, ou null se ocorreu um erro.
      */
     public function delete(string $termos)
     {
@@ -338,9 +305,9 @@ abstract class Model
     }
 
     /**
-     * Returns the number of records found by the query.
+     * Retorna o número de registros encontrados pela consulta.
      *
-     * @return int The number of records found.
+     * @return int O número de registros encontrados.
      */
     public function amount(): int
     {
@@ -352,16 +319,16 @@ abstract class Model
     }
 
     /**
-     * Saves the record in the database. Performs insert or update depending on the presence of an ID.
+     * Salva o registro no banco de dados. Realiza inserção ou atualização dependendo da presença de um ID.
      *
-     * @return bool Returns true if the operation was successful, or false if an error occurred.
+     * @return bool Retorna true se a operação foi bem-sucedida, ou false se ocorreu um erro.
      */
     public function save(): bool
     {
         if (empty($this->id)) {
             $id = $this->register($this->storage());
             if ($this->error) {
-                $this->message->messageError('System error while trying to register data');
+                $this->message->messageError('Erro no sistema ao tentar registrar os dados');
                 return false;
             }
         }
@@ -370,7 +337,7 @@ abstract class Model
             $id = $this->id;
             $this->update($this->storage(), "id = {$id}");
             if ($this->error) {
-                $this->message->messageError('System error while trying to update data');
+                $this->message->messageError('Erro no sistema ao tentar atualizar os dados');
                 return false;
             }
         }
@@ -380,9 +347,9 @@ abstract class Model
     }
 
     /**
-     * Returns the next available ID for insertion.
+     * Retorna o próximo ID disponível para inserção.
      *
-     * @return int The next available ID.
+     * @return int O próximo ID disponível.
      */
     private function lastId(): int
     {

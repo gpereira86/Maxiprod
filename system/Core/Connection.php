@@ -6,10 +6,10 @@ use PDO;
 use PDOException;
 
 /**
- * Class Connection
+ * Classe Connection
  *
- * Provides a singleton implementation for creating and managing a PDO database connection.
- * Ensures a single instance of the database connection is reused throughout the application.
+ * Fornece uma implementação singleton para criar e gerenciar uma conexão PDO com o banco de dados.
+ * Garante que uma única instância da conexão com o banco de dados seja reutilizada em toda a aplicação.
  *
  * @package system\Core
  */
@@ -17,19 +17,19 @@ class Connection
 {
     /**
      * @var PDO|null $instance
-     * Holds the singleton instance of the PDO connection.
+     * Contém a instância singleton da conexão PDO.
      */
     private static $instance;
 
     /**
-     * Retrieves the singleton instance of the PDO connection.
+     * Recupera a instância singleton da conexão PDO.
      *
-     * If the instance does not exist, it initializes the connection using the specified
-     * database configuration constants: `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, and `DB_PASSWORD`.
+     * Se a instância não existir, inicializa a conexão usando as constantes de configuração
+     * do banco de dados: `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, e `DB_PASSWORD`.
      *
-     * @return PDO The PDO instance representing the database connection.
+     * @return PDO A instância PDO representando a conexão com o banco de dados.
      *
-     * @throws PDOException If there is an error establishing the connection.
+     * @throws PDOException Se houver um erro ao estabelecer a conexão.
      */
     public static function getInstance(): PDO
     {
@@ -47,27 +47,27 @@ class Connection
                     ]
                 );
             } catch (PDOException $ex) {
-                die("Connection Error >>> " . $ex->getMessage());
+                die("Erro de Conexão >>> " . $ex->getMessage());
             }
         }
         return self::$instance;
     }
 
     /**
-     * Protected constructor to prevent instantiation.
+     * Construtor protegido para evitar a instanciação direta.
      *
-     * This ensures the singleton pattern is respected and the class cannot
-     * be instantiated directly.
+     * Isso garante que o padrão singleton seja respeitado e que a classe não possa
+     * ser instanciada diretamente.
      */
     protected function __construct()
     {
     }
 
     /**
-     * Private clone method to prevent cloning.
+     * Método privado de clonagem para evitar a clonagem da instância.
      *
-     * This ensures the singleton pattern is respected and the instance cannot
-     * be duplicated.
+     * Isso garante que o padrão singleton seja respeitado e que a instância não possa
+     * ser duplicada.
      */
     private function __clone(): void
     {

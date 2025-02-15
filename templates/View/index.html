@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h1>Members</h1>
+<h2 class="fw-bolder text-center mb-4 custom-color-blue">Controle Financeiro</h2>
 {{ flash() }}
 
 <form action="{{ url() }}" method="POST" class="mb-4" style="max-width: 400px;">
@@ -20,17 +20,17 @@
 <div class="container mb-4">
     <div class="row">
         <div class="col text-center">
-            <h4>Transações Cadastradas</h4>
-            <h1>{{ totalTransactions }}</h1>
+            <h5>Transações Cadastradas</h5>
+            <h1 class="custom-color-blue custom-extra-size">{{ totalTransactions }}</h1>
         </div>
         <div class="col text-center">
-            <h4>Pessoas Cadastradas</h4>
-            <h1>{{ totalPersons }}</h1>
+            <h5>Pessoas Cadastradas</h5>
+            <h1 class="custom-color-blue custom-extra-size">{{ totalPersons }}</h1>
         </div>
         {% if personFilter.name is defined %}
         <div class="col text-center">
-            <h4>Transações Cadastradas {{ personFilter.name }}</h4>
-            <h1>{{ totalUserTransactions }}</h1>
+            <h5>Transações Cadastradas por {{ personFilter.name }}</h5>
+            <h1 class="custom-color-blue custom-extra-size">{{ totalUserTransactions }}</h1>
         </div>
         {% endif %}
     </div>
@@ -40,7 +40,7 @@
 
 <div class="container mt-2 mb-5 overflow-y-auto">
     <hr class="custom-gray-line">
-    <h4 class="text-center my-2 fw-bolder">Transações Cadastradas {{ personFilter.name is defined ? 'de ' ~ personFilter.name : ''}}</h4>
+    <h4 class="text-center my-2 fw-bolder">Transações Cadastradas {{ personFilter.name is defined ? 'por ' ~ personFilter.name : ''}}</h4>
 
     <div class="table-responsive">
         <table class="table align-middle custom-table-header mt-3">
@@ -60,7 +60,7 @@
                 <td class="col-sm text-center">{{transaction.id}}</td>
                 <td class="col-sm ps-5">{{transaction.expense_name}}</td>
                 <td class="col-sm text-center">{{transaction.cost_type}}</td>
-                <td class="col-sm text-center">{{transaction.cost}}</td>
+                <td class="col-sm text-center">{{ 'R$ ' ~ transaction.cost|replace({',': '.'})|number_format(2, ',', '.') }}</td>
 
 
                 {% set found = false %}
@@ -88,8 +88,6 @@
             </tbody>
         </table>
     </div>
-
-
 
 </div>
 

@@ -6,6 +6,12 @@ use System\Core\Helpers;
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
+/**
+ * Carrega as variáveis de ambiente e define constantes essenciais.
+ *
+ * Este script inicializa a configuração do sistema, carregando as variáveis de ambiente a partir do arquivo `.env`
+ * e definindo constantes que são utilizadas em toda a aplicação, como informações sobre o site e configuração de banco de dados.
+ */
 date_default_timezone_set('America/Sao_Paulo');
 
 define('COMPANY', 'Maxiprod');

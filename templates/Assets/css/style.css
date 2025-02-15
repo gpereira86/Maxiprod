@@ -122,14 +122,25 @@ nav.navbar {
 
 }
 
-.table thead tr {
+.table thead tr{
     background: none !important;
     background: radial-gradient(circle at left, #18A6D8, #1475AF, #0C1A64) !important;
 }
 
-.table thead th {
+.table thead th{
     background: none !important;
     color: white !important;
+}
+
+.custom-tfoot tr{
+    background: none !important;
+    background: #2794B9 !important;
+}
+
+.custom-tfoot tr td{
+    background: none !important;
+    color: #FFFFFF;
+    font-weight: bolder;
 }
 
 .custom-gray-line {
@@ -190,4 +201,12 @@ nav.navbar {
 .error-404 {
     font-size: 10rem;
     color: lightgray;
+}
+
+.custom-color-blue {
+    color: #1783a4;
+}
+
+.custom-extra-size {
+    font-size: 5rem;
 }

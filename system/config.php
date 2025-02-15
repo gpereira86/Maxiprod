@@ -18,7 +18,7 @@ define('COMPANY', 'Maxiprod');
 define('MY_NAME', 'Glauco Pereira');
 define('SITE_DESCRIPTION', 'Teste de Programação Maxiprod - Glauco Pereira');
 
-define('URL_PRODUTION', 'https://maxiprod.glaucopereira.com');
+define('URL_PRODUTION', 'https://maxiprodtest.glaucopereira.com');
 define('URL_DEVELOPEMENT', 'http://localhost/maxiprod');
 
 if (Helpers::localhost()) {

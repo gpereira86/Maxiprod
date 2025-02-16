@@ -2,6 +2,8 @@
 
 Este é um sistema de controle de gastos residenciais simples que permite o cadastro de pessoas, transações financeiras e a consulta de totais de receitas, despesas e saldos. O objetivo do projeto é gerenciar de forma eficiente as finanças pessoais, com funcionalidades para registrar e consultar transações de diferentes pessoas e calcular o saldo geral.
 
+- **link para acesso do projeto prublicado: https://maxiprodtest.glaucopereira.com/**
+
 
 ## Tecnologias Utilizadas 
 

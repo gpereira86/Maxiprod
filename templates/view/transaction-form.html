@@ -6,7 +6,7 @@
 
     <h4 class="text-center my-2 fw-bolder">
         {% if not formData.id %}
-            Cadastro de Entradas e Saídas
+            Cadastro de Receitas e Despesas
         {% else %}
             Edição da {{ formData.typeOption }} da transacão {{ formData.descryption }}
         {% endif %}
@@ -26,13 +26,13 @@
         <div class="row justify-content-center mb-3">
             <div class="col-sm-3 col-12">
                 <div class="pb-1">
-                    <span>Responsável pela transação:</span>
+                    <span>Pessoa Responsável pela transação:</span>
                 </div>
-                <select class="form-select" aria-label="Default select example" name="usuario" id="usuarioSelect">
-                    <option selected disabled>-- Selecione o responsável aqui --</option>
+                <select class="form-select" aria-label="Default select example" name="pessoa" id="pessoaSelect">
+                    <option selected disabled>-- Selecione a pessoa aqui --</option>
                     {% for person in persons %}
-                    <option age="{{person.age}}" value="{{ person.id }}" {% if person.id == formData.usuario %}selected{% endif %}>
-                        {{ person.name }}
+                    <option age="{{person.age}}" value="{{ person.id }}" {% if person.id == formData.pessoa %}selected{% endif %}>
+                        {{ person.name }} {{ person.age < 18 ? ' (menor de idade)' : '' }}
                     </option>
                     {% endfor %}
                 </select>
@@ -44,13 +44,13 @@
                 </div>
 
 
-                <input type="radio" class="btn-check" name="typeOption" id="option1" autocomplete="off" value="Entrada" disabled
-                {% if formData.typeOption == 'Entrada' %}checked{% endif %}>
-                <label class="btn btn-outline-success" for="option1">Entrada</label>
+                <input type="radio" class="btn-check" name="typeOption" id="option1" autocomplete="off" value="Receita" disabled
+                {% if formData.typeOption == 'Receita' %}checked{% endif %}>
+                <label class="btn btn-outline-success" for="option1">Receita</label>
 
-                <input type="radio" class="btn-check" name="typeOption" id="option2" autocomplete="off" value="Saida" disabled
-                {% if formData.typeOption == 'Saida' %}checked{% endif %}>
-                <label class="btn btn-outline-danger" for="option2">Saída</label>
+                <input type="radio" class="btn-check" name="typeOption" id="option2" autocomplete="off" value="Despesa" disabled
+                {% if formData.typeOption == 'Despesa' %}checked{% endif %}>
+                <label class="btn btn-outline-danger" for="option2">Despesa</label>
 
             </div>
 
@@ -58,11 +58,22 @@
 
         <div class="row justify-content-center mb-2">
             <div class="col-sm-6 col-12">
-                <input type="text" name="nomeDespesa" class="form-control mb-2" placeholder="Insira aqui a Nome identificador da despesa" aria-label="Nome identificador da despesa" value="{{ formData.nomeDespesa is defined ? formData.nomeDespesa : '' }}" disabled>
+                <input type="text"
+                       name="nomeDespesa"
+                       class="form-control mb-2"
+                       placeholder="Insira aqui a descriçao da despesa"
+                       aria-label="Descriçao da despesa"
+                       value="{{ formData.nomeDespesa is defined ? formData.nomeDespesa : '' }}" disabled>
             </div>
 
             <div class="col-sm-3 col-12">
-                <input type="number" name="valor" class="form-control mb-2" placeholder="Valor (formato 0.00)" aria-label="valor" min="0" step="0.01" value="{{ formData.valor is defined ? formData.valor : '' }}" disabled>
+                <input type="number"
+                       name="valor"
+                       class="form-control mb-2"
+                       placeholder="Valor (formato 0.00)"
+                       aria-label="valor"
+                       min="0" step="0.01"
+                       value="{{ formData.valor is defined ? formData.valor : '' }}" disabled>
             </div>
 
 
@@ -70,7 +81,11 @@
 
         <div class="row justify-content-center">
             <div class="col-sm-9 col-12">
-                <textarea class="form-control" rows="3" placeholder="Se necessário, inclua seu(s) comentário(s) sobre o lançamento aqui..." id="observacao" name="observacao" disabled>{{ formData.observacao|trim }}</textarea>
+                <textarea class="form-control"
+                          rows="3"
+                          placeholder="Se necessário, inclua seu(s) comentário(s) e observações sobre o lançamento aqui..."
+                          id="observacao"
+                          name="observacao" disabled>{{ formData.observacao|trim }}</textarea>
             </div>
         </div>
 
@@ -99,17 +114,17 @@
 
 <div class="container mt-2 mb-5">
     <hr class="custom-gray-line">
-    <h4 class="text-center my-2 fw-bolder">Últimas 10 Transações Cadastradas</h4>
+    <h4 class="text-center my-2 fw-bolder">Transações Cadastradas</h4>
 
     <div class="table-responsive">
         <table class="table align-middle custom-table-header mt-3">
             <thead class="table-light text-center">
                 <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">Nome da Transação</th>
+                    <th scope="col">Descrição da Transação</th>
                     <th scope="col">Tipo de Custo</th>
                     <th scope="col">Custo</th>
-                    <th scope="col">Usuário</th>
+                    <th scope="col">Pessoa</th>
                     <th scope="col">Comentário</th>
                     <th scope="col">Ação</th>
                 </tr>
@@ -167,5 +182,5 @@
 {% endblock %}
 
 {% block script %}
-<script src="{{ url('templates/Assets/js/transactions.js') }}"></script>
+<script src="{{ url('templates/assets/js/transactions.js') }}"></script>
 {% endblock %}

@@ -22,7 +22,6 @@ abstract class Model
     protected $params;
     protected $table;
     protected $order;
-
     protected $limit;
     protected $offset;
     protected $message;

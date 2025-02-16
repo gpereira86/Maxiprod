@@ -8,7 +8,7 @@ use System\Core\Helpers;
 use System\Model\TransactionModel;
 
 /**
- * Classe responsável pelo gerenciamento da página principal e funcionalidades associadas.
+ * Classe responsável pelo gerenciamento da página principal, página de totais e página de erro, além de funcionalidades associadas.
  *
  * Esta classe lida com a exibição de informações sobre pessoas, transações e totais, além de fornecer funcionalidade de filtragem e cálculo de saldos.
  *
@@ -16,18 +16,7 @@ use System\Model\TransactionModel;
  */
 class MainController extends Controller
 {
-    /**
-     * Instância do modelo de pessoas.
-     *
-     * @var PeopleModel
-     */
     protected $personInstance;
-
-    /**
-     * Instância do modelo de transações.
-     *
-     * @var TransactionModel
-     */
     protected $transactionInstance;
 
     /**
@@ -37,7 +26,7 @@ class MainController extends Controller
      */
     public function __construct()
     {
-        parent::__construct('templates/View');
+        parent::__construct('templates/view');
         $this->personInstance = new PeopleModel();
         $this->transactionInstance = new TransactionModel();
     }
@@ -59,7 +48,9 @@ class MainController extends Controller
                 'totalTransactions' => $this->transactionInstance->search()->amount(),
             ]);
         } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
             $id = $_POST['filtro'];
+
             if ($id == 'TODOS') {
                 Helpers::redirect();
             }
@@ -87,20 +78,10 @@ class MainController extends Controller
     public function total(): void
     {
         echo $this->template->toRender('total.html', [
-            'persons'=> $this->personInstance->search()->result(true),
+            'persons'=> $this->personInstance->search()->order('name ASC')->result(true),
             'amountPerPerson' => $this->amountPerCostType()["perPerson"],
             'amountTotal' => $this->amountPerCostType()["total"],
         ]);
-    }
-
-    /**
-     * Exibe a página de erro 404.
-     *
-     * @return void
-     */
-    public function error404(): void
-    {
-        echo $this->template->toRender('404.html', []);
     }
 
     /**
@@ -122,9 +103,9 @@ class MainController extends Controller
             $expense = 0;
 
             foreach ($transactions as $transaction) {
-                if ($transaction->cost_type == 'Entrada') {
+                if ($transaction->cost_type == 'Receita') {
                     $income += $transaction->cost;
-                } elseif ($transaction->cost_type == 'Saida') {
+                } elseif ($transaction->cost_type == 'Despesa') {
                     $expense += $transaction->cost;
                 }
             }
@@ -150,4 +131,15 @@ class MainController extends Controller
             'total' => $amount,
         ];
     }
+
+    /**
+     * Exibe a página de erro 404.
+     *
+     * @return void
+     */
+    public function error404(): void
+    {
+        echo $this->template->toRender('404.html', []);
+    }
+
 }

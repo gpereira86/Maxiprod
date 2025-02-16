@@ -3,10 +3,11 @@
 {% block content %}
 
 <h2 class="fw-bolder text-center mb-4 custom-color-blue">Controle Financeiro</h2>
+
 {{ flash() }}
 
 <form action="{{ url() }}" method="POST" class="mb-4" style="max-width: 400px;">
-    <select class="form-select form-control" aria-label="Default select example" name="filtro" id="userFilter" onchange="this.form.submit()">
+    <select class="form-select form-control" aria-label="Selecione a pessoa" name="filtro" id="userFilter" onchange="this.form.submit()">
         <option value="TODOS" {% if person.id == formData.filtro %}selected{% endif %}>TODOS</option>
 
         {% for person in persons %}
@@ -29,7 +30,7 @@
         </div>
         {% if personFilter.name is defined %}
         <div class="col text-center">
-            <h5>Transações Cadastradas por {{ personFilter.name }}</h5>
+            <h5>Transações Cadastradas por <strong>{{ personFilter.name }}</strong></h5>
             <h1 class="custom-color-blue custom-extra-size">{{ totalUserTransactions }}</h1>
         </div>
         {% endif %}
@@ -40,7 +41,12 @@
 
 <div class="container mt-2 mb-5 overflow-y-auto">
     <hr class="custom-gray-line">
-    <h4 class="text-center my-2 fw-bolder">Transações Cadastradas {{ personFilter.name is defined ? 'por ' ~ personFilter.name : ''}}</h4>
+    <h4 class="text-center my-2 fw-bolder">
+        Transações Cadastradas
+        {% if personFilter.name is defined %}
+        por <strong>{{ personFilter.name }}</strong>
+        {% endif %}
+    </h4>
 
     <div class="table-responsive">
         <table class="table align-middle custom-table-header mt-3">
@@ -50,13 +56,16 @@
                 <th scope="col">Nome da Transação</th>
                 <th scope="col">Tipo de Custo</th>
                 <th scope="col">Custo</th>
-                <th scope="col">Usuário</th>
+                <th scope="col">Pessoa</th>
                 <th scope="col">Comentário</th>
             </tr>
             </thead>
             <tbody>
             {% for transaction in transactions %}
-            <tr>
+
+
+                {% set letterRed = 'text-danger' %}
+
                 <td class="col-sm text-center">{{transaction.id}}</td>
                 <td class="col-sm ps-5">{{transaction.expense_name}}</td>
                 <td class="col-sm text-center">{{transaction.cost_type}}</td>

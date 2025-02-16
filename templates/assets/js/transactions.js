@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const selectUsuario = document.querySelector('select[name="usuario"]');
+    const selectUsuario = document.querySelector('select[name="pessoa"]');
     const radioEntrada = document.querySelector('#option1');
     const radioSaida = document.querySelector('#option2');
     const labelEntrada = document.querySelector('label[for="option1"]');
     const labelSaida = document.querySelector('label[for="option2"]');
-    const formElements = document.querySelectorAll('input:not([name="usuario"]), textarea, select:not([name="usuario"]), button');
+    const formElements = document.querySelectorAll('input:not([name="pessoa"]), textarea, select:not([name="pessoa"]), button');
     function toggleFormElements() {
-        const isUserSelected = (selectUsuario.value !== '' && selectUsuario.value !== "-- Selecione o responsável aqui --");
+        const isUserSelected = (selectUsuario.value !== '' && selectUsuario.value !== "-- Selecione a pessoa aqui --");
         const alertButton = document.querySelector('.alert .btn-close');
         const dropdownButton = document.getElementById('menuDropdownButton');
 

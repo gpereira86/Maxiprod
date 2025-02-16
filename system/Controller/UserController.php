@@ -10,7 +10,7 @@ use System\Model\TransactionModel;
 /**
  * Classe UserController
  *
- * Controlador responsável por gerenciar as operações relacionadas a usuários, como cadastro, edição e exclusão de registros.
+ * Controlador responsável por gerenciar as operações relacionadas a pessoas, como cadastro, edição e exclusão de registros.
  *
  * @package system\Controller
  */
@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        parent::__construct('templates/View');
+        parent::__construct('templates/view');
         $this->personInstance = new PeopleModel();
     }
 
@@ -56,12 +56,12 @@ class UserController extends Controller
 
                     $this->personInstance->save();
 
-                    $this->message->success("O usuário '{$_POST['nome']}' foi cadastrado com sucesso.")->flash();
+                    $this->message->success("A pessoa '{$_POST['nome']}' foi cadastrado com sucesso.")->flash();
 
                     Helpers::redirect("cadastrar-pessoa");
 
                 } else {
-                    $this->message->messageError("Erro ao salvar dados no Banco de Dados, verifique os dados.")->flash();
+                    $this->message->messageError("Erro ao salvar dados no Banco de Dados, verifique-os.")->flash();
                     echo $this->template->toRender('people-form.html', [
                         'persons' => $this->personInstance->search()->result(true),
                         'formData' => $_POST,
@@ -80,11 +80,11 @@ class UserController extends Controller
     }
 
     /**
-     * Método para excluir um usuário e suas transações associadas.
+     * Método para excluir uma pessoa e suas transações associadas.
      *
      * Exclui o registro de pessoa e todas as transações associadas a ela.
      *
-     * @param int $id O ID do usuário a ser excluído.
+     * @param int $id O ID da pessoa a ser excluído.
      * @return void
      */
     public function deletePerson(int $id): void
@@ -96,9 +96,9 @@ class UserController extends Controller
                 $this->personInstance->delete("id = {$id}");
                 $transactionInstance = new TransactionModel();
                 $transactionInstance->delete("people_id = {$id}");
-                $this->message->success("O usuário '{$person->data()->name}' e todas suas transações foram excluídas com sucesso!")->flash();
+                $this->message->success("A pessoa '{$person->data()->name}' e todas suas transações foram excluídas com sucesso!")->flash();
             } else {
-                $this->message->messageError("Algo deu errado! | O id de usuário: '{$id}' não foi encontrado.")->flash();
+                $this->message->messageError("Algo deu errado! | O id: '{$id}' não foi encontrado em nossos registros.")->flash();
             }
 
         } catch (\Exception $e) {
@@ -109,11 +109,11 @@ class UserController extends Controller
     }
 
     /**
-     * Método para editar um usuário existente.
+     * Método para editar uma pessoa existente.
      *
      * Exibe o formulário de edição no método GET e processa as alterações no método POST.
      *
-     * @param int $id O ID do usuário a ser editado.
+     * @param int $id O ID da pessoa a ser editado.
      * @return void
      */
     public function editPerson(int $id): void
@@ -141,12 +141,12 @@ class UserController extends Controller
 
                 $this->personInstance->save();
 
-                $this->message->success("O cadastro do usuário '{$_POST['nome']}' foi atualizado com sucesso.")->flash();
+                $this->message->success("O cadastro da pessoa '{$_POST['nome']}' foi atualizado com sucesso.")->flash();
 
                 Helpers::redirect("cadastrar-pessoa");
 
             } else {
-                $this->message->messageError("Erro ao tentar alterar dados do usuário '{$_POST['nome']}' no Banco de Dados, verifique os dados.")->flash();
+                $this->message->messageError("Erro ao tentar alterar dados da pessoa '{$_POST['nome']}' no Banco de Dados.")->flash();
                 echo $this->template->toRender('people-form.html', [
                     'persons' => $this->personInstance->search()->result(true),
                     'formData' => $_POST,

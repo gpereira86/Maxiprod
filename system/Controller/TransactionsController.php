@@ -23,7 +23,7 @@ class TransactionsController extends Controller
      */
     public function __construct()
     {
-        parent::__construct('templates/View');
+        parent::__construct('templates/view');
         $this->personInstance = new PeopleModel();
         $this->transactionInstance = new TransactionModel();
     }
@@ -43,7 +43,7 @@ class TransactionsController extends Controller
 
             echo $this->template->toRender('transaction-form.html', [
                 'persons' => $this->personInstance->search()->result(true),
-                'transactions' => $this->transactionInstance->search()->limit(10)->order('id DESC')->result(true),
+                'transactions' => $this->transactionInstance->search()->order('id DESC')->result(true),
             ]);
 
         } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -57,17 +57,17 @@ class TransactionsController extends Controller
                     $this->transactionInstance->cost = $dataSet['valor'];
                     $this->transactionInstance->cost_type = $dataSet['typeOption'];
                     $this->transactionInstance->notes = $dataSet['observacao'];
-                    $this->transactionInstance->people_id = $dataSet['usuario'];
+                    $this->transactionInstance->people_id = $dataSet['pessoa'];
 
                     $this->transactionInstance->save();
 
                     $this->message->success("A transação '{$_POST['nomeDespesa']}' foi cadastrada com sucesso.")->flash();
 
-                    Helpers::redirect();
+                    Helpers::redirect("cadastrar-transacao");
 
                 } else {
                     echo $this->template->toRender('transaction-form.html', [
-                        'transactions' => $this->transactionInstance->search()->limit(10)->order('id DESC')->result(true),
+                        'transactions' => $this->transactionInstance->search()->order('id DESC')->result(true),
                         'persons' => $this->personInstance->search()->result(true),
                         'formData' => $_POST,
                     ]);
@@ -131,7 +131,7 @@ class TransactionsController extends Controller
                 'valor' => $transaction->data()->cost,
                 'typeOption' => $transaction->data()->cost_type,
                 'observacao' => $transaction->data()->notes,
-                'usuario' => $transaction->data()->people_id,
+                'pessoa' => $transaction->data()->people_id,
             ];
 
             echo $this->template->toRender('transaction-form.html', [
@@ -150,7 +150,7 @@ class TransactionsController extends Controller
                 $this->transactionInstance->cost = $dataSet['valor'];
                 $this->transactionInstance->cost_type = $dataSet['typeOption'];
                 $this->transactionInstance->notes = $dataSet['observacao'];
-                $this->transactionInstance->people_id = $dataSet['usuario'];
+                $this->transactionInstance->people_id = $dataSet['pessoa'];
 
                 $this->transactionInstance->save();
 
@@ -184,12 +184,12 @@ class TransactionsController extends Controller
         $part2Mensagem = "precisa ser preenchido(a) de acordo com padrão solicitado no campo.";
 
         if (!isset($data) || empty($data)) {
-            $this->message->messageError("Todos os dados precisam ser preenchidos de acordo com padrão solicitado no campo.")->flash();
+            $this->message->messageError("Todos os campos com * precisam ser preenchidos.")->flash();
             return false;
         }
 
         if (!isset($data['nomeDespesa']) || empty($data['nomeDespesa'])) {
-            $this->message->messageError("O nome identificador da despesa ". $part2Mensagem)->flash();
+            $this->message->messageError("A descrição da despesa ". $part2Mensagem)->flash();
             return false;
         }
 
@@ -204,25 +204,25 @@ class TransactionsController extends Controller
         if (!isset($data['typeOption']) || empty($data['typeOption'])) {
             $this->message->messageError("O tipo de custo ". $part2Mensagem)->flash();
             return false;
-        } elseif ($data['typeOption'] != 'Entrada' && $data['typeOption'] != 'Saida') {
-            $this->message->messageError("O tipo de custo precisa ser preenchido apenas com 'Entrada' ou 'Saida.")->flash();
+        } elseif ($data['typeOption'] != 'Receita' && $data['typeOption'] != 'Despesa') {
+            $this->message->messageError("O tipo de custo precisa ser preenchido apenas com 'Receita' ou 'Despesa.")->flash();
             return false;
         }
 
-        if (!isset($data['usuario']) || empty($data['usuario'])) {
-            $this->message->messageError("O Usuário ". $part2Mensagem)->flash();
+        if (!isset($data['pessoa']) || empty($data['pessoa'])) {
+            $this->message->messageError("A pessoa responsável pelo receita/despesa ". $part2Mensagem)->flash();
             return false;
-        } elseif ($data['usuario'] < 0) {
-            $this->message->messageError("O Usuário ". $part2Mensagem)->flash();
+        } elseif ($data['pessoa'] < 0) {
+            $this->message->messageError("A pessoa responsável pelo receita/despesa ". $part2Mensagem)->flash();
             return false;
-        } elseif (!is_numeric($data['usuario']) || !$this->personInstance->searchById($data['usuario'])) {
-            $this->message->messageError("O Usuário informado não está cadastrado em nossa base de dados, antes de mais nada, cadastre-o.")->flash();
+        } elseif (!is_numeric($data['pessoa']) || !$this->personInstance->searchById($data['pessoa'])) {
+            $this->message->messageError("A pessoa informada não está cadastrado em nossa base de dados, antes de mais nada, cadastre-a.")->flash();
             return false;
         }
 
-        $user = $this->personInstance->searchById($data['usuario']);
-        if ($user->data()->age < 18 && $data['typeOption'] == 'Entrada') {
-            $this->message->messageError("Usuários com menos de 18 anos não podem registrar transações de 'Entrada', apenas de 'Saída'.")->flash();
+        $user = $this->personInstance->searchById($data['pessoa']);
+        if ($user->data()->age < 18 && $data['typeOption'] == 'Receita') {
+            $this->message->messageError("Pessoas com menos de 18 anos não podem registrar transações de 'Receita', apenas de 'Despesa'.")->flash();
             return false;
         }
 

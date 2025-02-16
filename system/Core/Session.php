@@ -3,72 +3,68 @@
 namespace System\Core;
 
 /**
- * Class Session
+ * Classe Session
  *
- * Provides session management functionalities including session creation,
- * retrieval, checking, clearing, and handling user IP and flash messages.
+ * Fornece funcionalidades de gerenciamento de sessão, incluindo criação,
+ * recuperação, verificação, limpeza e manipulação de IP do usuário e mensagens flash.
  *
  * @package system\Core
  */
 class Session
 {
     /**
-     * Session constructor.
+     * Construtor da sessão.
      *
-     * Initializes the session and ensures the user's IP address is stored
-     * if not already present in the session.
+     * Inicializa a sessão e garante que o endereço IP do usuário seja armazenado
+     * caso ainda não esteja presente na sessão.
      */
     public function __construct()
     {
         if (!session_id()) {
             session_start();
         }
-
-        if (!$this->check('ip')) {
-            $this->create('ip', $this->getUserIp());
-        }
     }
 
     /**
-     * Creates or updates a session variable.
+     * Cria ou atualiza uma variável de sessão.
      *
-     * @param string $key   The name of the session variable.
-     * @param mixed  $value The value to store in the session variable.
-     * @return Session Returns the current session instance for method chaining.
+     * @param string $chave O nome da variável de sessão.
+     * @param mixed  $valor O valor a ser armazenado na variável de sessão.
+     * @return Session Retorna a instância atual da sessão para encadeamento de métodos.
      */
-    public function create(string $key, mixed $value): Session
+    public function create(string $chave, mixed $valor): Session
     {
-        $_SESSION[$key] = $value;
+        $_SESSION[$chave] = $valor;
         return $this;
     }
 
     /**
-     * Checks if a session variable exists.
+     * Verifica se uma variável de sessão existe.
      *
-     * @param string $key The name of the session variable to check.
-     * @return bool Returns true if the session variable exists, false otherwise.
+     * @param string $chave O nome da variável de sessão a verificar.
+     * @return bool Retorna true se a variável de sessão existir, false caso contrário.
      */
-    public function check(string $key): bool
+    public function check(string $chave): bool
     {
-        return isset($_SESSION[$key]);
+        return isset($_SESSION[$chave]);
     }
 
     /**
-     * Clears a specific session variable.
+     * Limpa uma variável específica da sessão.
      *
-     * @param string $key The name of the session variable to clear.
-     * @return Session Returns the current session instance for method chaining.
+     * @param string $chave O nome da variável de sessão a ser limpa.
+     * @return Session Retorna a instância atual da sessão para encadeamento de métodos.
      */
-    public function clear(string $key): Session
+    public function clear(string $chave): Session
     {
-        unset($_SESSION[$key]);
+        unset($_SESSION[$chave]);
         return $this;
     }
 
     /**
-     * Destroys the current session, clearing all session data.
+     * Destrói a sessão atual, limpando todos os dados de sessão.
      *
-     * @return Session Returns the current session instance for method chaining.
+     * @return Session Retorna a instância atual da sessão para encadeamento de métodos.
      */
     public function delete(): Session
     {
@@ -77,20 +73,20 @@ class Session
     }
 
     /**
-     * Magic method to retrieve a session variable's value.
+     * Método mágico para recuperar o valor de uma variável de sessão.
      *
-     * @param string $attribute The name of the session variable.
-     * @return mixed|null Returns the value of the session variable or null if not set.
+     * @param string $atributo O nome da variável de sessão.
+     * @return mixed|null Retorna o valor da variável de sessão ou null se não estiver definida.
      */
-    public function __get($attribute)
+    public function __get($atributo)
     {
-        return $this->check($attribute) ? $_SESSION[$attribute] : null;
+        return $this->check($atributo) ? $_SESSION[$atributo] : null;
     }
 
     /**
-     * Retrieves and clears the flash message stored in the session.
+     * Recupera e limpa a mensagem flash armazenada na sessão.
      *
-     * @return Message|null Returns the flash message if it exists, or null if not.
+     * @return Message|null Retorna a mensagem flash se existir, ou null caso contrário.
      */
     public function flash(): ?Message
     {
@@ -102,29 +98,5 @@ class Session
         return null;
     }
 
-    /**
-     * Retrieves the user's IP address.
-     *
-     * @return string Returns the user's IP address.
-     */
-    public function getUserIp(): string
-    {
-        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-            return $_SERVER['HTTP_CLIENT_IP'];
-        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            return $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else {
-            return $_SERVER['REMOTE_ADDR'];
-        }
-    }
 
-    /**
-     * Retrieves the IP address stored in the session.
-     *
-     * @return string|null Returns the IP address from the session, or null if not set.
-     */
-    public function getIpSession(): ?string
-    {
-        return $this->check('ip') ? $_SESSION['ip'] : null;
-    }
 }

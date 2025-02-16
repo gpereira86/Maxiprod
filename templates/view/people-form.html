@@ -7,9 +7,9 @@
     <h4 class="text-center my-4 fw-bolder">
 
         {% if not formData.id %}
-            Cadastro de Usuário
+            Cadastro de Pessoa
         {% else %}
-            Edição do Usuário: {{ formData.nome }}
+            Edição da Pessoa: {{ formData.nome }}
         {% endif %}
     </h4>
     <div class="row justify-content-center">
@@ -48,7 +48,7 @@
 
 <div class="container my-5 ">
     <hr class="custom-gray-line">
-    <h4 class="text-center mt-2 fw-bolder">Usuários Cadastrados</h4>
+    <h4 class="text-center mt-2 fw-bolder">Pessoas Cadastrados</h4>
 
     <div class="">
         <div class="table-responsive overflow-auto">
@@ -70,11 +70,11 @@
                             <td class="col-sm-2 text-center">{{person.age}}</td>
 
                             <td class="col-sm text-center">
-                                <a href="{{ url('editar-pessoa/' ~ person.id) }}" class="d-inline-block text-decoration-none custom-primary-button warning">
+                                <a href="{{ url('editar-pessoa/' ~ person.id) }}"
+                                   class="d-inline-block text-decoration-none custom-primary-button warning mb-1">
                                     <i class="fa-regular fa-pen-to-square"></i>
                                     <span class="d-none d-sm-inline">Editar</span>
                                 </a>
-                                &nbsp;
                                 <a href="{{ url('deletar-pessoa/' ~ person.id) }}"
                                    class="d-inline-block text-decoration-none custom-primary-button danger"
                                    data-id="{{ person.id }}"
@@ -96,12 +96,12 @@
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content text-center">
-                <div class="modal-header  bg-danger-subtle text-danger-emphasis">
+                <div class="modal-header bg-danger-subtle text-danger-emphasis">
                     <h5 class="modal-title" id="deleteModalLabel">Confirmação Ação</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Você tem certeza de que deseja excluir o usuário <strong id="modalPersonName"></strong>?<br>
+                    Você tem certeza de que deseja excluir a pessoa <strong id="modalPersonName"></strong>?<br>
                     Esta ação apagará todas as transações deste usuário e não poderá ser desfeita.
                 </div>
                 <div class="modal-footer custom-gray-bg-color">
@@ -117,5 +117,5 @@
 {% endblock %}
 
 {% block script %}
-<script src="{{ url('templates/Assets/js/modal.js') }}"></script>
+<script src="{{ url('templates/assets/js/modal.js') }}"></script>
 {% endblock %}

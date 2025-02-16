@@ -66,5 +66,5 @@ Sistema desenvolvido em PHP 8.4 utilizando arquiterura MVC
 
 ## Observações
 
-- O projeto foi desenvolvido para fins de demonstração e aprendizado, sendo necessário melhorias para uso em produção.
+- O projeto foi desenvolvido para fins de demonstração e aprendizado, podendo ser necessárias melhorias para uso em produção.
 - Comentários e documentação estão presentes no código para explicar a lógica implementada.

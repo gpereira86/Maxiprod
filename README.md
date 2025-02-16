@@ -22,10 +22,10 @@ Sistema desenvolvido em PHP 8.4 utilizando arquiterura MVC
 - **Home**: Listagem de transações, totalizador de transação, totalizador de pessoas cadastradas e filtro de transações por pessoa.
 
 
-- **Cadastro de Pessoas**: Criação, listagem, edição e exclusão de pessoas. Ao deletar uma pessoa, todas as suas transações são removidas automaticamente.
+- **Pessoas**: Criação, listagem, edição e exclusão de pessoas. Ao deletar uma pessoa, todas as suas transações são removidas automaticamente.
 
 
-- **Cadastro de Transações**: Adição, listagem, edição e exclusão de transações financeiras, com descrição, valor, tipo (despesa ou receita) e a associação a uma pessoa. Caso a pessoa seja menor de idade (menos de 18 anos), apenas despesas são permitidas.
+- **Transações**: Adição, listagem, edição e exclusão de transações financeiras, com descrição, valor, tipo (despesa ou receita) e a associação a uma pessoa. Caso a pessoa seja menor de idade (menos de 18 anos), apenas despesas são permitidas.
 
 
 - **Totais**: Exibe o total de receitas, despesas e saldo (receita - despesa) para cada pessoa cadastrada. Também calcula o total geral de receitas, despesas e saldo líquido de todas as pessoas.

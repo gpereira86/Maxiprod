@@ -79,11 +79,11 @@ class Template
                         'url' => '',
                         'active' => (!str_contains($uri, '404') && !str_contains($uri, 'pessoa') && !str_contains($uri, 'transacao') && !str_contains($uri, 'totais')) ? 'custom-active' : ''
                     ],
-                    [   'name' => 'Cadastro de Pessoa',
+                    [   'name' => 'Pessoas',
                         'url' => 'cadastrar-pessoa',
                         'active' => str_contains($uri, 'pessoa') ? 'custom-active': ''
                     ],
-                    [   'name' => 'Cadastro de Transação',
+                    [   'name' => 'Transações',
                         'url' => 'cadastrar-transacao',
                         'active' => str_contains($uri, 'transacao') ? 'custom-active': ''
                     ],

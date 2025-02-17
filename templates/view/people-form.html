@@ -39,6 +39,15 @@
                     Salvar
                 {% endif %}
             </button>
+
+            <button class="btn btn-secondary mt-3" type="reset" onclick="window.location.href='{{ url('cadastrar-pessoa') }}'">
+                {% if not formData.id %}
+                limpar Formulário
+                {% else %}
+                cancelar
+                {% endif %}
+            </button>
+
         </div>
     </form>
 

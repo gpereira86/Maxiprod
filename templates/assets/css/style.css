@@ -4,18 +4,44 @@
     box-sizing: border-box;
 }
 
+html{
+    scrollbar-gutter: stable;
+}
+
 body{
     background-color: #FBFBFB;
 }
 
 header {
-    margin: 15px 0;
+    margin-top: 15px;
     color: #737373;
     background-color: #FFFFFF;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.03);
     border-bottom: 1px solid #dddddd;
 
+    @media (max-width: 992px) {
+
+        header {
+            padding-left: 0;
+            margin: 0;
+        }
+
+        h4 {
+            font-size: 1.1rem;
+        }
+
+        .nav-item{
+            font-size: 1.1rem;
+        }
+
+    }
+
     @media (max-width: 768px) {
+
+        header{
+            padding-left: unset;
+        }
+
         h4, .custom-menu-size{
             font-size: 1.1rem;
             margin: 0;
@@ -79,7 +105,6 @@ nav.navbar {
 .custom-active{
     color: #18A6D8;
 }
-
 
 @media (min-width: 768px) {
 

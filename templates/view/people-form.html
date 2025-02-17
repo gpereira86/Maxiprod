@@ -2,16 +2,16 @@
 
 {% block content %}
 
-<div class="container mt-4">
+<div class="container">
 
-    <h4 class="text-center my-4 fw-bolder">
+    <h2 class="fw-bolder text-start mb-4 custom-color-blue">
 
         {% if not formData.id %}
             Cadastro de Pessoa
         {% else %}
             Edição da Pessoa: {{ formData.nome }}
         {% endif %}
-    </h4>
+    </h2>
     <div class="row justify-content-center">
         <div class="col-sm-9 col-12">
             {{ flash() }}

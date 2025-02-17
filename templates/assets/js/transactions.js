@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const selectedOption = selectUsuario.selectedOptions[0];
         const userAge = selectedOption ? parseInt(selectedOption.getAttribute('age')) : null;
 
-
         if (!isUserSelected || userAge === null) {
             radioEntrada.disabled = true;
             radioSaida.disabled = true;
@@ -57,7 +56,45 @@ document.addEventListener('DOMContentLoaded', function () {
         radioSaida.disabled = false;
         labelSaida.classList.remove('btn-secondary');
         labelSaida.classList.add('btn-outline-danger');
+
+        filterTable(selectedOption);
+
     }
+
+    function filterTable(personOption) {
+        const selectedPersonName = personOption.getAttribute('person-Name');
+        const table = document.querySelector('.table');
+        const rows = table.getElementsByTagName('tr');
+
+        for (let i = 1; i < rows.length; i++) {
+            rows[i].style.display = '';
+        }
+
+        if (selectedPersonName !== '') {
+            for (let i = 1; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                let personName = '';
+
+                for (let j = 0; j < cells.length; j++) {
+                    if (cells[j].innerText.includes('Não localizado')) {
+                        continue;
+                    }
+
+                    if (cells[j].innerText === cells[j].closest('tr').querySelector('td:nth-child(5)').innerText) {
+                        personName = cells[j].innerText;
+                        break;
+                    }
+                }
+
+                if (selectedPersonName === personName) {
+                    rows[i].style.display = '';
+                } else {
+                    rows[i].style.display = 'none';
+                }
+            }
+        }
+    }
+
 
     toggleFormElements();
 

@@ -2,102 +2,111 @@
 
 {% block content %}
 
-<h2 class="fw-bolder text-center mb-4 custom-color-blue">Controle Financeiro</h2>
+<div class="container">
 
-{{ flash() }}
+    <h2 class="fw-bolder text-start mb-4 custom-color-blue"> Controle Financeiro</h2>
 
-<form action="{{ url() }}" method="POST" class="mb-4" style="max-width: 400px;">
-    <select class="form-select form-control" aria-label="Selecione a pessoa" name="filtro" id="userFilter" onchange="this.form.submit()">
-        <option value="TODOS" {% if person.id == formData.filtro %}selected{% endif %}>TODOS</option>
+    {{ flash() }}
 
-        {% for person in persons %}
-        <option value="{{ person.id }}" {% if person.id == formData.filtro %}selected{% endif %}>
-            {{ person.name }}
-        </option>
-        {% endfor %}
-    </select>
-</form>
+    <form action="{{ url() }}" method="POST" class="mb-4" style="max-width: 400px;">
+        <select class="form-select form-control" aria-label="Selecione a pessoa" name="filtro" id="userFilter" onchange="this.form.submit()">
+            <option value="TODOS" {% if person.id == formData.filtro %}selected{% endif %}>TODOS</option>
 
-<div class="container mb-4">
-    <div class="row">
-        <div class="col text-center">
-            <h5>Transações Cadastradas</h5>
-            <h1 class="custom-color-blue custom-extra-size">{{ totalTransactions }}</h1>
-        </div>
-        <div class="col text-center">
-            <h5>Pessoas Cadastradas</h5>
-            <h1 class="custom-color-blue custom-extra-size">{{ totalPersons }}</h1>
-        </div>
-        {% if personFilter.name is defined %}
-        <div class="col text-center">
-            <h5>Transações Cadastradas por <strong>{{ personFilter.name }}</strong></h5>
-            <h1 class="custom-color-blue custom-extra-size">{{ totalUserTransactions }}</h1>
-        </div>
-        {% endif %}
-    </div>
-
-</div>
-
-
-<div class="container mt-2 mb-5 overflow-y-auto">
-    <hr class="custom-gray-line">
-    <h4 class="text-center my-2 fw-bolder">
-        Transações Cadastradas
-        {% if personFilter.name is defined %}
-        por <strong>{{ personFilter.name }}</strong>
-        {% endif %}
-    </h4>
-
-    <div class="table-responsive">
-        <table class="table align-middle custom-table-header mt-3">
-            <thead class="table-light text-center">
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Nome da Transação</th>
-                <th scope="col">Tipo de Custo</th>
-                <th scope="col">Custo</th>
-                <th scope="col">Pessoa</th>
-                <th scope="col">Comentário</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for transaction in transactions %}
-
-
-                {% set letterRed = 'text-danger' %}
-
-                <td class="col-sm text-center">{{transaction.id}}</td>
-                <td class="col-sm ps-5">{{transaction.expense_name}}</td>
-                <td class="col-sm text-center">{{transaction.cost_type}}</td>
-                <td class="col-sm text-center">{{ 'R$ ' ~ transaction.cost|replace({',': '.'})|number_format(2, ',', '.') }}</td>
-
-
-                {% set found = false %}
-
-                {% for person in persons %}
-                {% if person.id == transaction.people_id %}
-                <td class="col-sm text-center">
-                    {{ person.name }}
-                </td>
-                {% set found = true %}
-                {% endif %}
-                {% endfor %}
-
-                {% if not found %}
-                <td class="col-sm text-center">
-                    Não localizado
-                </td>
-                {% endif %}
-
-
-                <td class="col-sm text-center">{{transaction.notes is empty ? ' --- ' : transaction.notes}}</td>
-
-            </tr>
+            {% for person in persons %}
+            <option value="{{ person.id }}" {% if person.id == formData.filtro %}selected{% endif %}>
+                {{ person.name }}
+            </option>
             {% endfor %}
-            </tbody>
-        </table>
+        </select>
+    </form>
+
+    <div class="container mb-4">
+        <div class="row">
+            <div class="col text-center">
+                <h5>Transações Cadastradas</h5>
+                <h1 class="custom-color-blue custom-extra-size">{{ totalTransactions }}</h1>
+            </div>
+            <div class="col text-center">
+                <h5>Pessoas Cadastradas</h5>
+                <h1 class="custom-color-blue custom-extra-size">{{ totalPersons }}</h1>
+            </div>
+            {% if personFilter.name is defined %}
+            <div class="col text-center">
+                <h5>Transações Cadastradas por <strong>{{ personFilter.name }}</strong></h5>
+                <h1 class="custom-color-blue custom-extra-size">{{ totalUserTransactions }}</h1>
+            </div>
+            {% endif %}
+        </div>
+
     </div>
 
+
+    <div class="container mt-2 mb-5 overflow-y-auto">
+        <hr class="custom-gray-line">
+        <h4 class="text-center my-2 fw-bolder">
+            Transações Cadastradas
+            {% if personFilter.name is defined %}
+            por <strong>{{ personFilter.name }}</strong>
+            {% endif %}
+        </h4>
+
+        <div class="table-responsive">
+            <table class="table align-middle custom-table-header mt-3">
+                <thead class="table-light text-center">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nome da Transação</th>
+                    <th scope="col">Tipo de Custo</th>
+                    <th scope="col">Custo</th>
+                    <th scope="col">Pessoa</th>
+                    <th scope="col">Comentário</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for transaction in transactions %}
+
+
+                    {% set letterRed = 'text-danger' %}
+
+                    <td class="col-sm text-center">{{transaction.id}}</td>
+                    <td class="col-sm ps-5">{{transaction.expense_name}}</td>
+                    <td class="col-sm text-center">{{transaction.cost_type}}</td>
+                        {% if transaction.cost_type == 'Despesa' %}
+                            <td class="col-sm text-center text-danger fw-medium">{{ '( R$ ' ~ transaction.cost|number_format(2, ',', '.') ~ ' )' }}
+                        {% else %}
+                            <td class="col-sm text-center">{{ 'R$ ' ~ transaction.cost|replace({',': '.'})|number_format(2, ',', '.') }}
+                        {% endif %}
+                    </td>
+
+
+
+                    {% set found = false %}
+
+                    {% for person in persons %}
+                    {% if person.id == transaction.people_id %}
+                    <td class="col-sm text-center">
+                        {{ person.name }}
+                    </td>
+                    {% set found = true %}
+                    {% endif %}
+                    {% endfor %}
+
+                    {% if not found %}
+                    <td class="col-sm text-center">
+                        Não localizado
+                    </td>
+                    {% endif %}
+
+
+                    <td class="col-sm text-center">{{transaction.notes is empty ? ' --- ' : transaction.notes}}</td>
+
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
 </div>
 
 {% endblock %}

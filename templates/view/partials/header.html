@@ -1,12 +1,14 @@
 <header class="pt-1">
-    <div class="d-flex justify-content-between justify-content-md-start align-items-center mx-1 mx-md-5 pe-auto">
+    <div class="container">
+        <div class="d-flex justify-content-between justify-content-md-start align-items-center mx-1 mx-md-0 pe-auto">
 
-            <h4 class="mx-0 ms-md-5 me-md-4 pt-2" role="button" onclick="window.location.href='{{ url() }}'"">
-                <img class="img-fluid pb-2 logo" src="https://maxiprod.com.br/wp-content/uploads/2023/05/Icone-p-Wordpress-512-%C3%97-512-px-150x150.png" alt="">
-                <span class="fw-lighter"> {{ constant('COMPANY')|upper }}</span> <span class="fw-bold">{{ constant('MY_NAME')|upper }}</span>
-            </h4>
-            {% include 'partials/menu.html' %}
+                <h4 class="pt-2" role="button" onclick="window.location.href='{{ url() }}'">
+                    <img class="img-fluid pb-2 logo" src="https://maxiprod.com.br/wp-content/uploads/2023/05/Icone-p-Wordpress-512-%C3%97-512-px-150x150.png" alt="">
+                    <span class="fw-lighter"> {{ constant('COMPANY')|upper }}</span> <span class="fw-bold">{{ constant('MY_NAME')|upper }}</span>
+                </h4>
+                {% include 'partials/menu.html' %}
 
+        </div>
     </div>
 </header>
 

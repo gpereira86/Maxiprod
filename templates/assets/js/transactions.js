@@ -5,10 +5,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const labelEntrada = document.querySelector('label[for="option1"]');
     const labelSaida = document.querySelector('label[for="option2"]');
     const formElements = document.querySelectorAll('input:not([name="pessoa"]), textarea, select:not([name="pessoa"]), button');
+
+
     function toggleFormElements() {
         const isUserSelected = (selectUsuario.value !== '' && selectUsuario.value !== "-- Selecione a pessoa aqui --");
         const alertButton = document.querySelector('.alert .btn-close');
         const dropdownButton = document.getElementById('menuDropdownButton');
+
 
         formElements.forEach(element => {
             element.disabled = !isUserSelected;
@@ -23,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         toggleRadioButtons(isUserSelected);
+
     }
 
     function toggleRadioButtons(isUserSelected) {

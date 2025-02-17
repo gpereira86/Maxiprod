@@ -135,7 +135,7 @@ class TransactionsController extends Controller
             ];
 
             echo $this->template->toRender('transaction-form.html', [
-                'transactions' => $this->transactionInstance->search()->limit(10)->order('id DESC')->result(true),
+                'transactions' => $this->transactionInstance->search()->order('id DESC')->result(true),
                 'persons' => $this->personInstance->search()->result(true),
                 'formData' => $formDataSet,
             ]);
@@ -156,11 +156,11 @@ class TransactionsController extends Controller
 
                 $this->message->success("O cadastro da transação de '{$_POST['typeOption']}': '{$_POST['nomeDespesa']}' foi atualizada com sucesso.")->flash();
 
-                Helpers::redirect();
+                Helpers::redirect("cadastrar-transacao");
 
             } else {
                 echo $this->template->toRender('transaction-form.html', [
-                    'transactions' => $this->transactionInstance->search()->limit(10)->order('id DESC')->result(true),
+                    'transactions' => $this->transactionInstance->search()->order('id DESC')->result(true),
                     'persons' => $this->personInstance->search()->result(true),
                     'formData' => $_POST,
                 ]);
